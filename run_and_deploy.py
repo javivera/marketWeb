@@ -42,14 +42,10 @@ def main():
     
     # Create a temporary script to run the analysis with default inputs
     temp_script = '''
-import sys
-from unittest.mock import patch
 from advanced_correlation_analysis import main
 
-# Mock input to provide default values (3 years = 1095 days)
-inputs = iter(["1095"])
-with patch("builtins.input", lambda prompt: next(inputs)):
-    main()
+# Run with default values (3 years, predefined stocks)
+main(use_defaults=True)
 '''
     
     # Write temporary script

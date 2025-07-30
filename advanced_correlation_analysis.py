@@ -1090,11 +1090,18 @@ def save_html_report(html_content, filename="index.html"):
         print(f"❌ Error saving HTML report: {e}")
         return None
 
-def main():
+def main(use_defaults=False):
     """Main execution function"""
     try:
-        # Get user input
-        symbols, data_period, time_frame_days = get_user_input()
+        if use_defaults:
+            # Use default values for automated runs
+            symbols = ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA', 'META', 'NVDA', 'NFLX', 'ORCL', 'CRM']
+            data_period = "3y"
+            time_frame_days = 1095  # 3 years
+            print(f"🤖 Running with defaults: {len(symbols)} stocks, 3-year period, {time_frame_days}-day analysis")
+        else:
+            # Get user input
+            symbols, data_period, time_frame_days = get_user_input()
         
         if symbols is None:
             return
