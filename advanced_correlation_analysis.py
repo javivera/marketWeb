@@ -8,7 +8,30 @@ import warnings
 import base64
 import io
 from pathlib import Path
+import os
+import time
+import threading
+import subprocess
 warnings.filterwarnings('ignore')
+
+# Simple .env file reader (no external dependencies)
+def load_env_file(env_path='.env'):
+    """Load environment variables from .env file"""
+    env_vars = {}
+    if not os.path.exists(env_path):
+        print(f"⚠️  Warning: {env_path} file not found. Using default values.")
+        return env_vars
+    
+    with open(env_path, 'r') as file:
+        for line in file:
+            line = line.strip()
+            if line and not line.startswith('#') and '=' in line:
+                key, value = line.split('=', 1)
+                # Remove quotes if present
+                value = value.strip().strip('"').strip("'")
+                env_vars[key] = value
+    
+    return env_vars
 
 def get_stock_data(symbols, period="1y"):
     """
@@ -450,85 +473,6 @@ def create_return_comparison_chart(return_stats, symbols, time_frame_days):
     plt.tight_layout()
     
     return save_plot_to_base64()
-
-def get_user_input():
-    """Get user input for analysis"""
-    print("=== Advanced Stock Correlation & Return Analysis ===\n")
-    
-    # Predefined stock symbols - modify this list as needed
-    symbols = ['AAPL', 'GOOGL', 'PLTR', 'TSLA', 'NVDA', 'AMZN', 'META', 'UBER','TSM','FXI','EEM','EWZ','SOXL','SPY']
-    
-    print(f"📊 Analyzing predefined stocks: {', '.join(symbols)}")
-    print(f"✅ Total stocks to analyze: {len(symbols)}")
-    
-    # Option to modify the list
-    modify_list = input("\nWould you like to modify the stock list? (y/n): ").strip().lower()
-    
-    if modify_list in ['y', 'yes']:
-        print("\nCurrent symbols:", ', '.join(symbols))
-        print("Enter new stock symbols (separated by commas or spaces):")
-        print("Example: AAPL, GOOGL, MSFT, TSLA, NVDA")
-        symbols_input = input("Stock symbols: ").strip()
-        
-        if symbols_input:  # If user provided input, use it
-            # Parse symbols
-            new_symbols = []
-            for symbol in symbols_input.replace(',', ' ').split():
-                symbol = symbol.strip().upper()
-                if symbol:
-                    new_symbols.append(symbol)
-            
-            if len(new_symbols) >= 2:
-                symbols = new_symbols
-                print(f"✅ Updated symbols: {', '.join(symbols)}")
-            else:
-                print("❌ Invalid input. Using predefined symbols.")
-        else:
-            print("✅ Using predefined symbols.")
-    
-    if len(symbols) < 2:
-        print("❌ Need at least 2 stock symbols.")
-        return None, None, None
-    
-    # Get data period
-    print("\nSelect data period:")
-    print("1. 1 year")
-    print("2. 2 years")
-    print("3. 3 years")
-    print("4. 5 years")
-    
-    while True:
-        choice = input("Enter your choice (1-4): ").strip()
-        if choice == "1":
-            data_period = "1y"
-            break
-        elif choice == "2":
-            data_period = "2y"
-            break
-        elif choice == "3":
-            data_period = "3y"
-            break
-        elif choice == "4":
-            data_period = "5y"
-            break
-        else:
-            print("Please enter 1, 2, 3, or 4.")
-    
-    # Get time frame for return calculations
-    print(f"\nEnter number of days for return calculations:")
-    print("Examples: 1 (daily), 5 (weekly), 20 (monthly), 60 (quarterly)")
-    
-    while True:
-        try:
-            time_frame_days = int(input("Number of days (1-252): "))
-            if 1 <= time_frame_days <= 252:
-                break
-            else:
-                print("Please enter a number between 1 and 252.")
-        except ValueError:
-            print("Please enter a valid integer.")
-    
-    return symbols, data_period, time_frame_days
 
 def generate_html_report(correlation_data, return_stats_text, symbols, data_period, time_frame_days, 
                         distribution_plots_b64, comparison_chart_b64):
@@ -1090,20 +1034,79 @@ def save_html_report(html_content, filename="index.html"):
         print(f"❌ Error saving HTML report: {e}")
         return None
 
-def main(use_defaults=False):
+def auto_git_commit_and_push():
+    """Automatically commit and push changes to git if enabled"""
+    try:
+        config = load_env_file()
+        auto_git_push = config.get('AUTO_GIT_PUSH', 'false').lower() == 'true'
+        
+        if not auto_git_push:
+            return
+        
+        print("📦 Auto-committing to git...")
+        
+        # Add all files
+        subprocess.run(['git', 'add', '.'], check=True, cwd=Path.cwd())
+        
+        # Create commit with timestamp
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        commit_message = config.get('GIT_COMMIT_MESSAGE', 'Auto-update: Stock analysis - {timestamp}')
+        commit_message = commit_message.format(timestamp=timestamp)
+        
+        # Commit changes
+        result = subprocess.run(['git', 'commit', '-m', commit_message], 
+                              capture_output=True, text=True, cwd=Path.cwd())
+        
+        if result.returncode == 0:
+            print("✅ Git commit created successfully")
+            
+            # Push to remote
+            push_result = subprocess.run(['git', 'push', 'origin', 'main'], 
+                                       capture_output=True, text=True, cwd=Path.cwd())
+            
+            if push_result.returncode == 0:
+                print("🚀 Changes pushed to git repository")
+            else:
+                print(f"⚠️  Push failed: {push_result.stderr}")
+                
+        elif "nothing to commit" in result.stdout:
+            print("ℹ️  No changes to commit")
+        else:
+            print(f"⚠️  Commit failed: {result.stderr}")
+            
+    except Exception as e:
+        print(f"⚠️  Git operation failed: {e}")
+
+def run_analysis_once():
+    """Run the analysis once"""
     """Main execution function"""
     try:
-        if use_defaults:
-            # Use default values for automated runs
-            symbols = ['AAPL', 'FXI', 'GOOGL', 'AMZN', 'TSLA', 'META', 'NVDA','AMD','TSM','EEM','EWZ','SOXL','SPY','PLTR','UBER']
-            data_period = "3y"
-            time_frame_days = 250  # ~1 year of trading days (more realistic for analysis)
-            print(f"🤖 Running with defaults: {len(symbols)} stocks, 3-year period, {time_frame_days}-day analysis")
-        else:
-            # Get user input
-            symbols, data_period, time_frame_days = get_user_input()
+        # Load configuration from .env file
+        config = load_env_file()
         
-        if symbols is None:
+        # Get configuration parameters
+        data_period = config.get('DATA_PERIOD', '3y')
+        time_frame_days = int(config.get('LOOKBACK_DAYS', '28'))
+        stock_symbols = config.get('STOCK_SYMBOLS', 'AAPL,MSFT,GOOGL,AMZN,TSLA,META,NVDA,NFLX,ORCL,CRM')
+        verbose_output = config.get('VERBOSE_OUTPUT', 'false').lower() == 'true'
+        
+        # Parse stock symbols
+        symbols = [s.strip().upper() for s in stock_symbols.split(',') if s.strip()]
+        
+        if not symbols:
+            print("❌ No stock symbols found in .env file")
+            print("   Please set STOCK_SYMBOLS in format: TICKER1,TICKER2,TICKER3")
+            return
+        
+        print(f"📋 Configuration loaded from .env:")
+        print(f"   • Data Period: {data_period}")
+        print(f"   • Lookback Days: {time_frame_days}")
+        print(f"   • Stock Symbols: {', '.join(symbols)}")
+        print(f"   • Total stocks: {len(symbols)}")
+        print(f"   • Verbose Output: {'Enabled' if verbose_output else 'Disabled'}")
+        
+        if len(symbols) < 2:
+            print("❌ Need at least 2 stock symbols for correlation analysis.")
             return
         
         print(f"\n{'='*80}")
@@ -1142,17 +1145,18 @@ def main(use_defaults=False):
             print("❌ Could not calculate return statistics.")
             return
         
-        # Print analyses
-        print_correlation_analysis(correlation_matrix, successful_symbols)
-        print_return_statistics_analysis(return_stats, successful_symbols, time_frame_days, data_period)
+        # Print analyses (only if verbose output is enabled)
+        if verbose_output:
+            print_correlation_analysis(correlation_matrix, successful_symbols)
+            print_return_statistics_analysis(return_stats, successful_symbols, time_frame_days, data_period)
         
         # Create visualizations and get base64 images for HTML
-        print(f"\n📊 Generating visualizations...")
+        print(f"📊 Generating visualizations...")
         distribution_plots_b64 = create_return_distribution_plots(period_returns, successful_symbols, time_frame_days)
         comparison_chart_b64 = create_return_comparison_chart(return_stats, successful_symbols, time_frame_days)
         
         # Generate and save HTML report
-        print(f"\n📄 Generating HTML report...")
+        print(f"📄 Generating HTML report...")
         html_content = generate_html_report(
             correlation_matrix, return_stats, successful_symbols, 
             data_period, time_frame_days,
@@ -1161,20 +1165,85 @@ def main(use_defaults=False):
         
         html_file_path = save_html_report(html_content)
         
-        print(f"\n{'='*80}")
-        print("ANALYSIS COMPLETE!")
-        print("📊 Correlation matrix shows how stocks move together")
-        print("📈 Return statistics show performance patterns over specified periods")
-        print("💡 Use this analysis for portfolio diversification and risk assessment")
-        if html_file_path:
-            print(f"🌐 Complete analysis available in HTML format: {html_file_path}")
-        print(f"{'='*80}")
+        if verbose_output:
+            print(f"\n{'='*80}")
+            print("ANALYSIS COMPLETE!")
+            print("📊 Correlation matrix shows how stocks move together")
+            print("📈 Return statistics show performance patterns over specified periods")
+            print("💡 Use this analysis for portfolio diversification and risk assessment")
+            if html_file_path:
+                print(f"🌐 Complete analysis available in HTML format: {html_file_path}")
+            print(f"{'='*80}")
+        else:
+            print("✅ Analysis complete! HTML report generated.")
+        
+        # Auto commit and push to git if enabled
+        auto_git_commit_and_push()
         
     except KeyboardInterrupt:
         print("\n\nAnalysis cancelled by user.")
     except Exception as e:
         print(f"\nError: {e}")
         print("Please check your inputs and try again.")
+
+def run_scheduler():
+    """Run the analysis on a schedule"""
+    config = load_env_file()
+    interval_hours = int(config.get('SCHEDULE_INTERVAL_HOURS', '4'))
+    
+    print(f"🕐 Starting automatic stock analysis scheduler")
+    print(f"📅 Analysis will run every {interval_hours} hours")
+    print(f"⏰ Next run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"🛑 Press Ctrl+C to stop the scheduler")
+    print("=" * 60)
+    
+    try:
+        while True:
+            # Run analysis
+            print(f"\n🚀 Starting scheduled analysis at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            run_analysis_once()
+            
+            # Calculate next run time
+            next_run = datetime.now() + timedelta(hours=interval_hours)
+            print(f"⏰ Next analysis scheduled for: {next_run.strftime('%Y-%m-%d %H:%M:%S')}")
+            print(f"💤 Sleeping for {interval_hours} hours...")
+            
+            # Sleep for the specified interval
+            time.sleep(interval_hours * 3600)  # Convert hours to seconds
+            
+    except KeyboardInterrupt:
+        print(f"\n🛑 Scheduler stopped by user at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print("👋 Goodbye!")
+
+def main():
+    """Main function - can run once or start scheduler"""
+    import sys
+    
+    # Check command line arguments
+    if len(sys.argv) > 1:
+        if sys.argv[1].lower() in ['schedule', 'scheduler', '--schedule', '-s']:
+            run_scheduler()
+        elif sys.argv[1].lower() in ['once', '--once', '-o']:
+            run_analysis_once()
+        elif sys.argv[1].lower() in ['help', '--help', '-h']:
+            print("Stock Correlation Analysis Tool")
+            print("=" * 40)
+            print("Usage:")
+            print("  python3 advanced_correlation_analysis.py          # Run once")
+            print("  python3 advanced_correlation_analysis.py once     # Run once")
+            print("  python3 advanced_correlation_analysis.py schedule # Run every 4 hours")
+            print("  python3 advanced_correlation_analysis.py help     # Show this help")
+            print("\nConfiguration:")
+            print("  Edit .env file to change settings:")
+            print("  - SCHEDULE_INTERVAL_HOURS: How often to run (default: 4)")
+            print("  - AUTO_GIT_PUSH: Automatically push to git (default: false)")
+            print("  - VERBOSE_OUTPUT: Show detailed output (default: false)")
+        else:
+            print(f"❌ Unknown argument: {sys.argv[1]}")
+            print("Use 'help' to see available options")
+    else:
+        # Default behavior - run once
+        run_analysis_once()
 
 if __name__ == "__main__":
     main()

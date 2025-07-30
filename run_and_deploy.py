@@ -40,12 +40,12 @@ def main():
     # Step 1: Run the advanced correlation analysis
     print("\n📊 Step 1: Running Advanced Correlation Analysis")
     
-    # Create a temporary script to run the analysis with default inputs
+    # Create a temporary script to run the analysis with .env configuration
     temp_script = '''
 from advanced_correlation_analysis import main
 
-# Run with default values (3 years, predefined stocks)
-main(use_defaults=True)
+# Run with .env configuration
+main()
 '''
     
     # Write temporary script

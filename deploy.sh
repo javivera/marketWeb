@@ -10,10 +10,10 @@ echo "=========================================================="
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "$SCRIPT_DIR"
 
-# Step 1: Run the advanced correlation analysis with 3-year lookback
+# Step 1: Run the advanced correlation analysis
 echo ""
-echo "📊 Step 1: Running Advanced Correlation Analysis (250-day periods from 3-year data)"
-python3 -c "from advanced_correlation_analysis import main; main(use_defaults=True)"
+echo "📊 Step 1: Running Advanced Correlation Analysis (using .env configuration)"
+python3 -c "from advanced_correlation_analysis import main; main()"
 
 # Check if the analysis was successful
 if [ $? -ne 0 ]; then
