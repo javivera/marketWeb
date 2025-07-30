@@ -1095,7 +1095,7 @@ def main(use_defaults=False):
     try:
         if use_defaults:
             # Use default values for automated runs
-            symbols = ['AAPL', 'FXI', 'GOOGL', 'AMZN', 'TSLA', 'META', 'NVDA','AMD','TSM','EEM','EWZ','SOXL','SPY']
+            symbols = ['AAPL', 'FXI', 'GOOGL', 'AMZN', 'TSLA', 'META', 'NVDA','AMD','TSM','EEM','EWZ','SOXL','SPY','PLTR','UBER']
             data_period = "3y"
             time_frame_days = 250  # ~1 year of trading days (more realistic for analysis)
             print(f"🤖 Running with defaults: {len(symbols)} stocks, 3-year period, {time_frame_days}-day analysis")
