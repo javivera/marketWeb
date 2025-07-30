@@ -12,7 +12,7 @@ cd "$SCRIPT_DIR"
 
 # Step 1: Run the advanced correlation analysis with 3-year lookback
 echo ""
-echo "📊 Step 1: Running Advanced Correlation Analysis (3-year lookback)"
+echo "📊 Step 1: Running Advanced Correlation Analysis (250-day periods from 3-year data)"
 python3 -c "from advanced_correlation_analysis import main; main(use_defaults=True)"
 
 # Check if the analysis was successful
