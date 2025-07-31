@@ -511,141 +511,247 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
             body {{
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 margin: 0;
-                padding: 10px;
-                background-color: #f5f5f5;
-                color: #333;
+                padding: 20px;
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+                min-height: 100vh;
+                color: rgba(255, 255, 255, 0.9);
+                position: relative;
+                overflow-x: hidden;
             }}
+            
+            body::before {{
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: 
+                    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 40%, rgba(120, 200, 255, 0.1) 0%, transparent 50%);
+                pointer-events: none;
+                z-index: 0;
+            }}
+            
             .container {{
                 max-width: 1200px;
                 margin: 0 auto;
-                background-color: white;
-                padding: 15px;
-                border-radius: 5px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 30px;
+                border-radius: 20px;
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+                position: relative;
+                z-index: 1;
             }}
+            
             .header {{
                 text-align: center;
-                border-bottom: 2px solid #2c3e50;
-                padding-bottom: 10px;
-                margin-bottom: 15px;
+                border-bottom: 2px solid rgba(120, 200, 255, 0.6);
+                padding-bottom: 20px;
+                margin-bottom: 30px;
             }}
+            
             .header h1 {{
-                color: #2c3e50;
+                color: rgba(255, 255, 255, 0.95);
                 margin: 0;
-                font-size: 2em;
+                font-size: 3em;
+                font-weight: 300;
+                letter-spacing: -1px;
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
             }}
+            
             .header p {{
-                color: #7f8c8d;
-                margin: 5px 0 0 0;
-                font-size: 1em;
+                color: rgba(255, 255, 255, 0.7);
+                margin: 15px 0 0 0;
+                font-size: 1.2em;
+                font-weight: 300;
             }}
+            
             .section {{
-                margin: 40px 0;
-                padding: 20px;
-                background-color: #fafafa;
-                border-radius: 8px;
-                border-left: 4px solid #3498db;
+                margin: 50px 0;
+                padding: 30px;
+                background: rgba(255, 255, 255, 0.08);
+                backdrop-filter: blur(15px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 15px;
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                position: relative;
+                overflow: hidden;
             }}
+            
+            .section::before {{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, 
+                    rgba(120, 119, 198, 0.8), 
+                    rgba(255, 119, 198, 0.6), 
+                    rgba(120, 200, 255, 0.8));
+            }}
+            
             .section h2 {{
-                color: #2c3e50;
-                border-bottom: 2px solid #3498db;
-                padding-bottom: 10px;
+                color: rgba(255, 255, 255, 0.9);
+                border-bottom: 2px solid rgba(120, 200, 255, 0.6);
+                padding-bottom: 15px;
                 margin-top: 0;
+                font-weight: 400;
+                text-shadow: 0 0 10px rgba(120, 200, 255, 0.3);
             }}
+            
             .summary-table {{
                 width: 100%;
                 border-collapse: collapse;
-                margin: 10px 0;
-                background-color: white;
-                border-radius: 5px;
+                margin: 20px 0;
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(10px);
+                border-radius: 10px;
                 overflow: hidden;
-                box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             }}
+            
             .summary-table th, .summary-table td {{
-                padding: 8px 10px;
+                padding: 12px 15px;
                 text-align: center;
-                border-bottom: 1px solid #ddd;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                color: rgba(255, 255, 255, 0.8);
             }}
+            
             .summary-table th {{
-                background-color: #3498db;
-                color: white;
-                font-weight: bold;
+                background: rgba(120, 200, 255, 0.2);
+                color: rgba(255, 255, 255, 0.95);
+                font-weight: 500;
                 cursor: pointer;
                 user-select: none;
                 position: relative;
+                transition: all 0.3s ease;
+                text-shadow: 0 0 10px rgba(120, 200, 255, 0.3);
             }}
+            
             .summary-table th:hover {{
-                background-color: #2980b9;
+                background: rgba(120, 200, 255, 0.3);
             }}
+            
             .summary-table th::after {{
                 content: ' ↕️';
                 font-size: 0.7em;
                 opacity: 0.7;
             }}
+            
             .summary-table tr:nth-child(even) {{
-                background-color: #f8f9fa;
+                background: rgba(255, 255, 255, 0.03);
             }}
+            
             .summary-table tr:hover {{
-                background-color: #e8f4f8;
+                background: rgba(255, 255, 255, 0.08);
             }}
+            
             .correlation-table {{
                 width: 100%;
                 border-collapse: collapse;
-                margin: 10px 0;
-                background-color: white;
-                border-radius: 5px;
+                margin: 20px 0;
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(10px);
+                border-radius: 10px;
                 overflow: hidden;
-                box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             }}
+            
             .correlation-table th, .correlation-table td {{
-                padding: 6px 8px;
+                padding: 8px 12px;
                 text-align: center;
-                border: 1px solid #ddd;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 0.9em;
             }}
+            
             .correlation-table th {{
-                background-color: #34495e;
-                color: white;
-                font-weight: bold;
+                background: rgba(52, 73, 94, 0.4);
+                color: rgba(255, 255, 255, 0.95);
+                font-weight: 500;
                 cursor: pointer;
                 user-select: none;
+                text-shadow: 0 0 5px rgba(52, 73, 94, 0.5);
             }}
+            
             .correlation-table th:hover {{
-                background-color: #2c3e50;
+                background: rgba(44, 62, 80, 0.5);
             }}
+            
             .chart-container {{
                 text-align: center;
-                margin: 5px 0;
-                padding: 5px;
-                background-color: white;
-                border-radius: 4px;
+                margin: 30px 0;
+                padding: 25px;
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(15px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 15px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             }}
+            
             .chart-container img {{
                 max-width: 100%;
                 height: auto;
-                border-radius: 4px;
+                border-radius: 10px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             }}
+            
             .info-box {{
-                background-color: #e8f6f3;
-                border: 1px solid #16a085;
-                border-radius: 5px;
-                padding: 10px;
-                margin: 10px 0;
+                background: rgba(46, 204, 113, 0.1);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(46, 204, 113, 0.3);
+                border-radius: 10px;
+                padding: 20px;
+                margin: 20px 0;
+                box-shadow: 0 4px 20px rgba(46, 204, 113, 0.1);
             }}
+            
             .info-box h4 {{
-                color: #16a085;
+                color: rgba(46, 204, 113, 0.9);
                 margin-top: 0;
-                margin-bottom: 8px;
+                margin-bottom: 12px;
+                text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
             }}
+            
             .footer {{
                 text-align: center;
-                margin-top: 20px;
-                padding-top: 10px;
-                border-top: 1px solid #ecf0f1;
-                color: #7f8c8d;
+                margin-top: 40px;
+                padding-top: 20px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                color: rgba(255, 255, 255, 0.6);
+                font-weight: 300;
             }}
-            .positive {{ color: #27ae60; font-weight: bold; }}
-            .negative {{ color: #e74c3c; font-weight: bold; }}
-            .neutral {{ color: #f39c12; font-weight: bold; }}
+            
+            .positive {{ 
+                color: rgba(46, 204, 113, 0.9) !important; 
+                font-weight: 500 !important;
+                text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+            }}
+            
+            .negative {{ 
+                color: rgba(231, 76, 60, 0.9) !important; 
+                font-weight: 500 !important;
+                text-shadow: 0 0 10px rgba(231, 76, 60, 0.3);
+            }}
+            
+            .neutral {{ 
+                color: rgba(243, 156, 18, 0.9) !important; 
+                font-weight: 500 !important;
+                text-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+            }}
             
             /* Collapsible sections */
             .collapsible {{

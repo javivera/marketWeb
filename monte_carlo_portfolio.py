@@ -658,85 +658,204 @@ def generate_html_report(simulation_data, analysis, chart_b64, config, historica
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
                 margin: 0;
                 padding: 20px;
-                background-color: #f5f5f5;
-                color: #333;
+                background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+                min-height: 100vh;
+                color: rgba(255, 255, 255, 0.9);
+                position: relative;
+                overflow-x: hidden;
             }}
+            
+            body::before {{
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: 
+                    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%),
+                    radial-gradient(circle at 40% 40%, rgba(120, 200, 255, 0.1) 0%, transparent 50%);
+                pointer-events: none;
+                z-index: 0;
+            }}
+            
             .container {{
                 max-width: 1200px;
                 margin: 0 auto;
-                background-color: white;
-                padding: 30px;
-                border-radius: 10px;
-                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 40px;
+                border-radius: 20px;
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+                    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+                position: relative;
+                z-index: 1;
             }}
+            
             h1 {{
-                color: #2c3e50;
+                color: rgba(255, 255, 255, 0.95);
                 text-align: center;
-                margin-bottom: 30px;
-                font-size: 2.5em;
+                margin-bottom: 40px;
+                font-size: 3em;
+                font-weight: 300;
+                letter-spacing: -1px;
+                text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
             }}
+            
             h2 {{
-                color: #34495e;
-                border-bottom: 2px solid #3498db;
-                padding-bottom: 10px;
-                margin-top: 40px;
+                color: rgba(255, 255, 255, 0.9);
+                border-bottom: 2px solid rgba(120, 200, 255, 0.6);
+                padding-bottom: 15px;
+                margin-top: 50px;
+                font-weight: 400;
+                text-shadow: 0 0 10px rgba(120, 200, 255, 0.3);
             }}
+            
+            h3 {{
+                color: rgba(255, 255, 255, 0.9);
+                font-weight: 400;
+                margin-top: 0;
+            }}
+            
             .summary-grid {{
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                gap: 20px;
-                margin: 30px 0;
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 25px;
+                margin: 40px 0;
             }}
+            
             .summary-card {{
-                background-color: #f8f9fa;
-                padding: 20px;
-                border-radius: 8px;
-                border-left: 4px solid #3498db;
+                background: rgba(255, 255, 255, 0.08);
+                backdrop-filter: blur(15px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 25px;
+                border-radius: 15px;
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.2),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
             }}
-            .summary-card h3 {{
-                margin-top: 0;
-                color: #2c3e50;
+            
+            .summary-card::before {{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 2px;
+                background: linear-gradient(90deg, 
+                    rgba(120, 119, 198, 0.8), 
+                    rgba(255, 119, 198, 0.6), 
+                    rgba(120, 200, 255, 0.8));
             }}
+            
+            .summary-card:hover {{
+                background: rgba(255, 255, 255, 0.12);
+                border-color: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+            }}
+            
             .summary-card .value {{
-                font-size: 1.5em;
-                font-weight: bold;
-                color: #3498db;
+                font-size: 1.4em;
+                font-weight: 500;
+                color: rgba(120, 200, 255, 0.9);
+                text-shadow: 0 0 10px rgba(120, 200, 255, 0.3);
             }}
-            .positive {{ color: #27ae60; }}
-            .negative {{ color: #e74c3c; }}
+            
+            .positive {{ 
+                color: rgba(46, 204, 113, 0.9) !important;
+                text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+            }}
+            
+            .negative {{ 
+                color: rgba(231, 76, 60, 0.9) !important;
+                text-shadow: 0 0 10px rgba(231, 76, 60, 0.3);
+            }}
+            
             table {{
                 width: 100%;
                 border-collapse: collapse;
-                margin: 20px 0;
+                margin: 25px 0;
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(10px);
+                border-radius: 10px;
+                overflow: hidden;
+                border: 1px solid rgba(255, 255, 255, 0.1);
             }}
+            
             th, td {{
-                padding: 12px;
+                padding: 15px;
                 text-align: left;
-                border-bottom: 1px solid #ddd;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                color: rgba(255, 255, 255, 0.8);
             }}
+            
             th {{
-                background-color: #3498db;
-                color: white;
+                background: rgba(120, 200, 255, 0.2);
+                color: rgba(255, 255, 255, 0.95);
+                font-weight: 500;
+                text-shadow: 0 0 10px rgba(120, 200, 255, 0.3);
             }}
+            
             .chart-container {{
                 text-align: center;
-                margin: 30px 0;
-                padding: 20px;
-                background-color: #f8f9fa;
-                border-radius: 8px;
+                margin: 40px 0;
+                padding: 30px;
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(15px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 15px;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             }}
+            
+            .chart-container img {{
+                border-radius: 10px;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            }}
+            
             .risk-metrics {{
                 display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 15px;
-                margin: 20px 0;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 20px;
+                margin: 30px 0;
             }}
+            
             .risk-card {{
-                background-color: #fff;
-                padding: 15px;
-                border-radius: 6px;
-                border: 1px solid #ddd;
+                background: rgba(255, 255, 255, 0.08);
+                backdrop-filter: blur(10px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 20px;
+                border-radius: 12px;
                 text-align: center;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            }}
+            
+            .risk-card:hover {{
+                background: rgba(255, 255, 255, 0.12);
+                transform: translateY(-2px);
+            }}
+            
+            .risk-card h4 {{
+                color: rgba(255, 255, 255, 0.9);
+                margin-top: 0;
+                font-weight: 400;
+            }}
+            
+            .risk-card p {{
+                color: rgba(255, 255, 255, 0.8);
+                margin: 8px 0;
+            }}
+            
+            .risk-card strong {{
+                color: rgba(120, 200, 255, 0.9);
             }}
         </style>
     </head>
