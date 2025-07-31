@@ -36,7 +36,7 @@ def load_env_file(env_path='.env'):
                 key, value = line.split('=', 1)
                 # Remove quotes if present
                 value = value.strip().strip('"').strip("'")
-                env_vars[key] = value
+                env_vars[key.strip()] = value
     
     return env_vars
 
@@ -94,37 +94,32 @@ def get_stock_data(symbols, period="1y"):
     
     return price_data, failed_symbols
 
-def calculate_returns(price_data, lookback_days):
-    """Calculate returns for different time periods"""
-    print(f"📈 Calculating {lookback_days}-day returns...")
-    
+def calculate_daily_returns(price_data):
+    """
+    Calculate daily returns for each stock - much simpler and more intuitive
+    Daily returns are the standard approach for Monte Carlo simulations
+    """
+    print(f"📈 Calculating daily returns...")
     returns_data = {}
     
-    for symbol in price_data.columns:
-        prices = price_data[symbol].dropna()
-        returns = []
-        
-        # Calculate rolling returns
-        for i in range(lookback_days, len(prices)):
-            start_price = prices.iloc[i - lookback_days]
-            end_price = prices.iloc[i]
-            period_return = (end_price - start_price) / start_price
-            returns.append(period_return)
-        
-        if returns:
-            returns_data[symbol] = np.array(returns)
+    for symbol, prices in price_data.items():
+        if len(prices) >= 2:
+            # Calculate daily returns: (price_today - price_yesterday) / price_yesterday
+            daily_returns = prices.pct_change().dropna().tolist()
+            returns_data[symbol] = daily_returns
+            print(f"    ✅ {symbol}: {len(daily_returns)} daily returns")
         else:
-            print(f"⚠️  {symbol}: Insufficient data for {lookback_days}-day periods")
+            print(f"⚠️  {symbol}: Insufficient data for daily returns")
     
     return returns_data
 
 def monte_carlo_simulation(returns_data, portfolio_holdings, current_prices, 
                          num_simulations, simulation_days, initial_cash=0):
     """
-    Run Monte Carlo simulation for portfolio returns
+    Run Monte Carlo simulation for portfolio returns using daily returns
     
     Parameters:
-    - returns_data: Historical returns for each stock
+    - returns_data: Daily returns for each stock
     - portfolio_holdings: Dictionary of {symbol: shares}
     - current_prices: Current prices for each stock
     - num_simulations: Number of Monte Carlo runs
@@ -134,18 +129,21 @@ def monte_carlo_simulation(returns_data, portfolio_holdings, current_prices,
     
     print(f"🎲 Running Monte Carlo simulation...")
     print(f"   • Simulations: {num_simulations:,}")
-    print(f"   • Time horizon: {simulation_days} days")
+    print(f"   • Time horizon: {simulation_days} days ({simulation_days/252:.2f} years)")
     print(f"   • Portfolio stocks: {len(portfolio_holdings)}")
+    print(f"   • Using daily returns for maximum flexibility")
     
-    # Calculate current portfolio value
+    # Calculate current portfolio value and weights
     portfolio_value = initial_cash
     valid_holdings = {}
+    stock_values = {}
     
     for symbol, shares in portfolio_holdings.items():
         if symbol in current_prices and symbol in returns_data:
             stock_value = shares * current_prices[symbol]
             portfolio_value += stock_value
             valid_holdings[symbol] = shares
+            stock_values[symbol] = stock_value
             print(f"   • {symbol}: {shares} shares @ ${current_prices[symbol]:.2f} = ${stock_value:,.2f}")
         else:
             print(f"   ⚠️  {symbol}: No data available, excluding from simulation")
@@ -156,38 +154,48 @@ def monte_carlo_simulation(returns_data, portfolio_holdings, current_prices,
         print("❌ No valid holdings found for simulation")
         return None
     
+    # Calculate portfolio weights
+    portfolio_weights = {symbol: stock_values[symbol] / portfolio_value for symbol in valid_holdings}
+    
     # Prepare returns statistics for simulation
     stocks = list(valid_holdings.keys())
     returns_matrix = np.array([returns_data[stock] for stock in stocks]).T
     
-    # Calculate mean returns and covariance matrix
-    mean_returns = np.mean(returns_matrix, axis=0)
-    cov_matrix = np.cov(returns_matrix.T)
+    # Calculate mean daily returns and covariance matrix (already daily, no conversion needed)
+    mean_daily_returns = np.mean(returns_matrix, axis=0)
+    daily_cov_matrix = np.cov(returns_matrix.T)
     
-    print(f"   • Mean daily returns: {mean_returns * 100}")
+    # Add small amount to diagonal for numerical stability
+    daily_cov_matrix += np.eye(len(daily_cov_matrix)) * 1e-8
+    
+    print(f"   • Mean daily returns: {[f'{r*100:.4f}%' for r in mean_daily_returns]}")
+    print(f"   • Portfolio weights: {[f'{symbol}: {w:.1%}' for symbol, w in portfolio_weights.items()]}")
     print(f"   • Running {num_simulations:,} simulations...")
     
     # Run Monte Carlo simulations
     simulation_results = []
     
     for sim in range(num_simulations):
-        # Generate random returns for each day
+        # Track portfolio value over time
         portfolio_values = [portfolio_value]
         current_portfolio_value = portfolio_value
         
         for day in range(simulation_days):
-            # Generate correlated random returns
-            random_returns = np.random.multivariate_normal(mean_returns, cov_matrix)
+            # Generate correlated random daily returns
+            try:
+                random_daily_returns = np.random.multivariate_normal(mean_daily_returns, daily_cov_matrix)
+            except np.linalg.LinAlgError:
+                # Fallback to independent returns if covariance matrix is singular
+                random_daily_returns = np.random.normal(mean_daily_returns, np.sqrt(np.diag(daily_cov_matrix)))
             
-            # Apply returns to each stock in the portfolio
-            day_change = 0
+            # Calculate portfolio return for this day
+            portfolio_daily_return = 0
             for i, symbol in enumerate(stocks):
-                shares = valid_holdings[symbol]
-                current_price = current_portfolio_value * (shares * current_prices[symbol]) / portfolio_value
-                stock_change = current_price * random_returns[i]
-                day_change += stock_change
+                weight = portfolio_weights[symbol]
+                portfolio_daily_return += weight * random_daily_returns[i]
             
-            current_portfolio_value += day_change
+            # Apply daily return to portfolio
+            current_portfolio_value *= (1 + portfolio_daily_return)
             portfolio_values.append(current_portfolio_value)
         
         # Calculate final return
@@ -205,34 +213,55 @@ def monte_carlo_simulation(returns_data, portfolio_holdings, current_prices,
         'initial_value': portfolio_value,
         'simulations': simulation_results,
         'portfolio_holdings': valid_holdings,
+        'portfolio_weights': portfolio_weights,
         'stocks': stocks,
-        'mean_returns': mean_returns,
-        'cov_matrix': cov_matrix
+        'mean_daily_returns': mean_daily_returns,
+        'daily_cov_matrix': daily_cov_matrix,
+        'simulation_days': simulation_days
     }
 
-def analyze_simulation_results(simulation_data):
-    """Analyze Monte Carlo simulation results"""
+def analyze_simulation_results(simulation_data, config=None):
+    """Analyze Monte Carlo simulation results with proper annualization"""
     
     if not simulation_data:
         return None
     
     results = simulation_data['simulations']
     initial_value = simulation_data['initial_value']
+    simulation_days = simulation_data.get('simulation_days', 252)
     
     # Extract results
     final_values = [r['final_value'] for r in results]
     total_returns = [r['total_return'] for r in results]
     
+    # Calculate basic statistics for the simulation period
+    mean_return = np.mean(total_returns)
+    std_return = np.std(total_returns)
+    
+    # Calculate annualized returns properly based on simulation period
+    periods_per_year = 252 / simulation_days
+    annualized_return = ((1 + mean_return) ** periods_per_year) - 1
+    annualized_volatility = std_return * np.sqrt(periods_per_year)
+    
+    # Sharpe ratio (get risk-free rate from config)
+    risk_free_rate = float(config.get('RISK_FREE_RATE', 0.05)) if config else 0.05
+    sharpe_ratio = (annualized_return - risk_free_rate) / annualized_volatility if annualized_volatility > 0 else 0
+    
     # Calculate statistics
     analysis = {
         'initial_value': initial_value,
         'num_simulations': len(results),
+        'simulation_days': simulation_days,
+        'simulation_years': simulation_days / 252,
         'mean_final_value': np.mean(final_values),
         'median_final_value': np.median(final_values),
         'std_final_value': np.std(final_values),
-        'mean_return': np.mean(total_returns),
+        'mean_return': mean_return,
         'median_return': np.median(total_returns),
-        'std_return': np.std(total_returns),
+        'std_return': std_return,
+        'annualized_return': annualized_return,
+        'annualized_volatility': annualized_volatility,
+        'sharpe_ratio': sharpe_ratio,
         'min_return': np.min(total_returns),
         'max_return': np.max(total_returns),
         'percentile_5': np.percentile(total_returns, 5),
@@ -245,7 +274,284 @@ def analyze_simulation_results(simulation_data):
         'var_99': np.percentile(total_returns, 1),  # Value at Risk (99% confidence)
     }
     
+    # Print enhanced summary
+    print(f"\n📊 Monte Carlo Analysis Results ({simulation_days}-day / {simulation_days/252:.1f}-year simulation):")
+    print(f"   • Expected return: {mean_return:.2%} ({annualized_return:.2%} annualized)")
+    print(f"   • Volatility: {std_return:.2%} ({annualized_volatility:.2%} annualized)")
+    print(f"   • Sharpe ratio: {sharpe_ratio:.2f}")
+    print(f"   • Probability of gain: {analysis['prob_gain']:.1%}")
+    print(f"   • 95% VaR: {analysis['var_95']:.2%}")
+    print(f"   • Return range: {analysis['min_return']:.2%} to {analysis['max_return']:.2%}")
+    
     return analysis
+
+def calculate_historical_performance(portfolio_holdings, current_prices):
+    """
+    Calculate historical portfolio performance for each year from 2020 to YTD
+    Including SPY benchmark comparison
+    """
+    print(f"📊 Calculating historical portfolio performance...")
+    
+    # Define years to analyze
+    years = [2020, 2021, 2022, 2023, 2024, 2025]  # 2025 will be YTD
+    results = {}
+    
+    # Get portfolio symbols
+    symbols = list(portfolio_holdings.keys())
+    
+    for year in years:
+        print(f"   • Analyzing {year}...")
+        
+        if year == 2025:
+            # Year to date - from Jan 1, 2025 to now
+            start_date = f"{year}-01-01"
+            end_date = datetime.now().strftime("%Y-%m-%d")
+            period_name = f"{year} YTD"
+        else:
+            # Full year
+            start_date = f"{year}-01-01"
+            end_date = f"{year}-12-31"
+            period_name = str(year)
+        
+        try:
+            # Download SPY data for benchmark comparison
+            spy_data = None
+            try:
+                spy_ticker = yf.Ticker("SPY")
+                spy_hist = spy_ticker.history(start=start_date, end=end_date)
+                if len(spy_hist) > 0:
+                    spy_start = spy_hist['Close'].iloc[0]
+                    spy_end = spy_hist['Close'].iloc[-1]
+                    spy_return = (spy_end - spy_start) / spy_start
+                    spy_data = {
+                        'start_price': spy_start,
+                        'end_price': spy_end,
+                        'return': spy_return
+                    }
+                    print(f"     📊 SPY benchmark: {spy_return:.2%}")
+            except Exception as e:
+                print(f"     ⚠️  Could not fetch SPY data for {period_name}")
+            
+            # Download portfolio data for this period
+            period_data = {}
+            valid_symbols = []
+            
+            for symbol in symbols:
+                try:
+                    ticker = yf.Ticker(symbol)
+                    hist = ticker.history(start=start_date, end=end_date)
+                    
+                    if len(hist) > 0:
+                        period_data[symbol] = hist['Close']
+                        valid_symbols.append(symbol)
+                    else:
+                        print(f"     ⚠️  {symbol}: No data available for {period_name}")
+                        
+                except Exception as e:
+                    print(f"     ⚠️  {symbol}: Error fetching data for {period_name}")
+                    continue
+            
+            if not valid_symbols:
+                print(f"     ❌ No valid data for {period_name}")
+                results[period_name] = None
+                continue
+            
+            # Calculate portfolio performance
+            portfolio_start_value = 0
+            portfolio_end_value = 0
+            stock_performances = {}
+            
+            for symbol in valid_symbols:
+                if symbol in portfolio_holdings:
+                    shares = portfolio_holdings[symbol]
+                    prices = period_data[symbol]
+                    
+                    if len(prices) >= 2:
+                        start_price = prices.iloc[0]
+                        end_price = prices.iloc[-1]
+                        
+                        stock_start_value = shares * start_price
+                        stock_end_value = shares * end_price
+                        stock_return = (end_price - start_price) / start_price
+                        
+                        portfolio_start_value += stock_start_value
+                        portfolio_end_value += stock_end_value
+                        
+                        stock_performances[symbol] = {
+                            'shares': shares,
+                            'start_price': start_price,
+                            'end_price': end_price,
+                            'return': stock_return,
+                            'start_value': stock_start_value,
+                            'end_value': stock_end_value
+                        }
+            
+            if portfolio_start_value > 0:
+                portfolio_return = (portfolio_end_value - portfolio_start_value) / portfolio_start_value
+                
+                # Calculate outperformance vs SPY
+                outperformance = None
+                if spy_data:
+                    outperformance = portfolio_return - spy_data['return']
+                
+                results[period_name] = {
+                    'start_value': portfolio_start_value,
+                    'end_value': portfolio_end_value,
+                    'return': portfolio_return,
+                    'stock_performances': stock_performances,
+                    'trading_days': len(period_data[valid_symbols[0]]) if valid_symbols else 0,
+                    'spy_return': spy_data['return'] if spy_data else None,
+                    'outperformance': outperformance
+                }
+                
+                if outperformance is not None:
+                    outperf_sign = "+" if outperformance >= 0 else ""
+                    print(f"     ✅ {period_name}: {portfolio_return:.2%} return (${portfolio_start_value:,.0f} → ${portfolio_end_value:,.0f}) | SPY: {spy_data['return']:.2%} | Outperformance: {outperf_sign}{outperformance:.2%}")
+                else:
+                    print(f"     ✅ {period_name}: {portfolio_return:.2%} return (${portfolio_start_value:,.0f} → ${portfolio_end_value:,.0f})")
+            else:
+                results[period_name] = None
+                print(f"     ❌ Could not calculate portfolio value for {period_name}")
+                
+        except Exception as e:
+            print(f"     ❌ Error analyzing {period_name}: {str(e)}")
+            results[period_name] = None
+    
+    return results
+
+def generate_historical_performance_html(historical_performance):
+    """Generate HTML section for historical performance with SPY comparison"""
+    
+    if not historical_performance:
+        return ""
+    
+    # Filter out None results and sort by year
+    valid_results = {k: v for k, v in historical_performance.items() if v is not None}
+    
+    if not valid_results:
+        return "<h2>📈 Historical Portfolio Performance</h2><p>No historical data available.</p>"
+    
+    html = """
+            <h2>📈 Historical Portfolio Performance vs SPY</h2>
+            <p>How your current portfolio performed compared to the S&P 500 benchmark:</p>
+            
+            <div class="summary-grid">
+    """
+    
+    # Sort by year (handle YTD specially)
+    sorted_periods = sorted(valid_results.keys(), key=lambda x: (int(x.split()[0]), 0 if 'YTD' in x else 1))
+    
+    for period in sorted_periods:
+        data = valid_results[period]
+        return_pct = data['return']
+        start_value = data['start_value']
+        end_value = data['end_value']
+        spy_return = data.get('spy_return')
+        outperformance = data.get('outperformance')
+        
+        # Determine color based on performance
+        color_class = 'positive' if return_pct > 0 else 'negative'
+        emoji = '📈' if return_pct > 0 else '📉'
+        
+        # Outperformance indicators
+        if outperformance is not None:
+            if outperformance > 0:
+                outperf_emoji = '🚀'
+                outperf_class = 'positive'
+                outperf_text = f'+{outperformance:.2%}'
+            else:
+                outperf_emoji = '📉'
+                outperf_class = 'negative'
+                outperf_text = f'{outperformance:.2%}'
+        else:
+            outperf_emoji = '❓'
+            outperf_class = ''
+            outperf_text = 'N/A'
+        
+        html += f"""
+                <div class="summary-card">
+                    <h3>{emoji} {period}</h3>
+                    <p><strong>Portfolio:</strong> <span class="value {color_class}">{return_pct:.2%}</span></p>
+        """
+        
+        if spy_return is not None:
+            spy_color = 'positive' if spy_return > 0 else 'negative'
+            html += f"""
+                    <p><strong>SPY:</strong> <span class="value {spy_color}">{spy_return:.2%}</span></p>
+                    <p><strong>Outperformance:</strong> <span class="value {outperf_class}">{outperf_text}</span> {outperf_emoji}</p>
+            """
+        
+        html += f"""
+                    <p><strong>Value:</strong> ${start_value:,.0f} → ${end_value:,.0f}</p>
+                </div>
+        """
+    
+    html += """
+            </div>
+            
+            <h3>📊 Detailed Performance Comparison Table</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Period</th>
+                        <th>Portfolio Return</th>
+                        <th>SPY Return</th>
+                        <th>Outperformance</th>
+                        <th>Portfolio Value</th>
+                        <th>Gain/Loss</th>
+                    </tr>
+                </thead>
+                <tbody>
+    """
+    
+    for period in sorted_periods:
+        data = valid_results[period]
+        return_pct = data['return']
+        start_value = data['start_value']
+        end_value = data['end_value']
+        gain_loss = end_value - start_value
+        spy_return = data.get('spy_return')
+        outperformance = data.get('outperformance')
+        
+        color_class = 'positive' if return_pct > 0 else 'negative'
+        
+        # SPY column
+        spy_cell = f'<span class="value {"positive" if spy_return > 0 else "negative"}">{spy_return:.2%}</span>' if spy_return is not None else 'N/A'
+        
+        # Outperformance column
+        if outperformance is not None:
+            outperf_sign = '+' if outperformance >= 0 else ''
+            outperf_class = 'positive' if outperformance >= 0 else 'negative'
+            outperf_cell = f'<span class="value {outperf_class}">{outperf_sign}{outperformance:.2%}</span>'
+        else:
+            outperf_cell = 'N/A'
+        
+        html += f"""
+                    <tr>
+                        <td><strong>{period}</strong></td>
+                        <td><span class="value {color_class}">{return_pct:.2%}</span></td>
+                        <td>{spy_cell}</td>
+                        <td>{outperf_cell}</td>
+                        <td>${start_value:,.0f} → ${end_value:,.0f}</td>
+                        <td><span class="value {color_class}">${gain_loss:+,.0f}</span></td>
+                    </tr>
+        """
+    
+    html += """
+                </tbody>
+            </table>
+            
+            <div style="margin-top: 20px; padding: 15px; background-color: #f0f8ff; border-left: 4px solid #007acc; border-radius: 5px;">
+                <h4>📝 Performance Notes:</h4>
+                <ul>
+                    <li><strong>Outperformance:</strong> Positive values mean your portfolio beat SPY, negative means it underperformed</li>
+                    <li><strong>SPY Benchmark:</strong> Represents the S&P 500 index performance for the same periods</li>
+                    <li><strong>🚀 = Outperformed SPY</strong> | <strong>📉 = Underperformed SPY</strong></li>
+                </ul>
+            </div>
+    """
+    
+    return html
 
 def create_simulation_charts(simulation_data, analysis):
     """Create visualization charts for Monte Carlo results"""
@@ -327,7 +633,7 @@ def create_simulation_charts(simulation_data, analysis):
     
     return chart_b64, analysis
 
-def generate_html_report(simulation_data, analysis, chart_b64, config):
+def generate_html_report(simulation_data, analysis, chart_b64, config, historical_performance=None):
     """Generate HTML report for Monte Carlo simulation results"""
     
     if not analysis:
@@ -440,8 +746,8 @@ def generate_html_report(simulation_data, analysis, chart_b64, config):
                 <div class="summary-card">
                     <h3>📊 Simulation Overview</h3>
                     <p><strong>Simulations:</strong> <span class="value">{analysis['num_simulations']:,}</span></p>
-                    <p><strong>Time Horizon:</strong> <span class="value">{config.get('SIMULATION_DAYS', 'N/A')} days</span></p>
-                    <p><strong>Lookback Period:</strong> <span class="value">{config.get('LOOKBACK_DAYS', 'N/A')} days</span></p>
+                    <p><strong>Time Horizon:</strong> <span class="value">{analysis['simulation_days']} days ({analysis['simulation_years']:.2f} years)</span></p>
+                    <p><em>Using daily returns for maximum precision and flexibility. Choose any simulation period!</em></p>
                 </div>
                 
                 <div class="summary-card">
@@ -454,15 +760,17 @@ def generate_html_report(simulation_data, analysis, chart_b64, config):
                 <div class="summary-card">
                     <h3>📈 Expected Returns</h3>
                     <p><strong>Mean Return:</strong> <span class="value {'positive' if analysis['mean_return'] > 0 else 'negative'}">{analysis['mean_return']:.2%}</span></p>
-                    <p><strong>Median Return:</strong> <span class="value {'positive' if analysis['median_return'] > 0 else 'negative'}">{analysis['median_return']:.2%}</span></p>
-                    <p><strong>Std Deviation:</strong> <span class="value">{analysis['std_return']:.2%}</span></p>
+                    <p><strong>Annualized Return:</strong> <span class="value {'positive' if analysis['annualized_return'] > 0 else 'negative'}">{analysis['annualized_return']:.2%}</span></p>
+                    <p><strong>Volatility (Annual):</strong> <span class="value">{analysis['annualized_volatility']:.2%}</span></p>
+                    <p><strong>Sharpe Ratio:</strong> <span class="value {'positive' if analysis['sharpe_ratio'] > 0 else 'negative'}">{analysis['sharpe_ratio']:.2f}</span></p>
                 </div>
                 
                 <div class="summary-card">
                     <h3>⚠️ Risk Metrics</h3>
                     <p><strong>VaR (95%):</strong> <span class="value negative">{analysis['var_95']:.2%}</span></p>
                     <p><strong>VaR (99%):</strong> <span class="value negative">{analysis['var_99']:.2%}</span></p>
-                    <p><strong>Prob. of Loss:</strong> <span class="value">{analysis['prob_loss']:.1%}</span></p>
+                    <p><strong>Prob. of Gain:</strong> <span class="value">{analysis['prob_gain']:.1%}</span></p>
+                    <p><strong>Simulation Period:</strong> <span class="value">{analysis['simulation_days']} days ({analysis['simulation_years']:.1f} years)</span></p>
                 </div>
             </div>
             
@@ -515,6 +823,11 @@ def generate_html_report(simulation_data, analysis, chart_b64, config):
                 </ul>
             </div>
             
+            <!-- Separator between Monte Carlo and Historical Performance -->
+            <hr style="margin: 40px 0; border: 2px solid #3498db; opacity: 0.3;">
+            
+            {generate_historical_performance_html(historical_performance)}
+            
             <div style="margin-top: 30px; text-align: center; color: #7f8c8d; font-size: 0.9em;">
                 <p>Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Monte Carlo Simulation</p>
                 <p><em>Note: Past performance does not guarantee future results. This simulation is for educational purposes only.</em></p>
@@ -536,13 +849,12 @@ def main():
     
     # Get configuration parameters
     data_period = config.get('DATA_PERIOD', '3y')
-    lookback_days = int(config.get('LOOKBACK_DAYS', '30'))
     stock_symbols = config.get('STOCK_SYMBOLS', 'AAPL,MSFT,GOOGL').split(',')
     portfolio_holdings_str = config.get('PORTFOLIO_HOLDINGS', '')
     num_simulations = int(config.get('MONTE_CARLO_SIMULATIONS', '10000'))
     simulation_days = int(config.get('SIMULATION_DAYS', '252'))
     initial_cash = float(config.get('INITIAL_CASH', '0'))
-    html_filename = config.get('HTML_FILENAME', 'monte_carlo_results.html')
+    html_filename = 'montecarlo.html'  # Fixed filename for Monte Carlo reports
     
     # Parse portfolio holdings
     portfolio_holdings = parse_portfolio_holdings(portfolio_holdings_str)
@@ -554,10 +866,9 @@ def main():
     
     print(f"📋 Configuration:")
     print(f"   • Data Period: {data_period}")
-    print(f"   • Lookback Days: {lookback_days}")
     print(f"   • Portfolio Holdings: {len(portfolio_holdings)} stocks")
     print(f"   • Monte Carlo Simulations: {num_simulations:,}")
-    print(f"   • Simulation Days: {simulation_days}")
+    print(f"   • Simulation Days: {simulation_days} ({simulation_days/252:.2f} years)")
     
     # Get stock symbols from portfolio
     symbols = list(portfolio_holdings.keys())
@@ -569,8 +880,8 @@ def main():
         print("❌ Could not fetch any stock data")
         return
     
-    # Calculate returns
-    returns_data = calculate_returns(price_data, lookback_days)
+    # Calculate daily returns (much simpler and more intuitive than rolling returns)
+    returns_data = calculate_daily_returns(price_data)
     
     if not returns_data:
         print("❌ Could not calculate returns for any stocks")
@@ -581,7 +892,7 @@ def main():
     for symbol in price_data.columns:
         current_prices[symbol] = price_data[symbol].iloc[-1]
     
-    # Run Monte Carlo simulation
+    # Run Monte Carlo simulation with daily returns
     simulation_data = monte_carlo_simulation(
         returns_data, portfolio_holdings, current_prices,
         num_simulations, simulation_days, initial_cash
@@ -592,13 +903,16 @@ def main():
         return
     
     # Analyze results
-    analysis = analyze_simulation_results(simulation_data)
+    analysis = analyze_simulation_results(simulation_data, config)
+    
+    # Calculate historical performance
+    historical_performance = calculate_historical_performance(portfolio_holdings, current_prices)
     
     # Create charts
     chart_b64, _ = create_simulation_charts(simulation_data, analysis)
     
     # Generate HTML report
-    html_content = generate_html_report(simulation_data, analysis, chart_b64, config)
+    html_content = generate_html_report(simulation_data, analysis, chart_b64, config, historical_performance)
     
     # Save HTML report
     try:
