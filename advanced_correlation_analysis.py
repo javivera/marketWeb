@@ -125,18 +125,19 @@ def calculate_period_returns(stock_data, lookback_days=30):
     period_returns_df = pd.DataFrame(returns_data)
     return period_returns_df
 
-def save_chart_to_base64(fig):
-    """Save matplotlib figure to base64 string"""
-    buffer = io.BytesIO()
-    fig.savefig(buffer, format='png', dpi=300, bbox_inches='tight', facecolor='none', transparent=True)
-    buffer.seek(0)
-    image_base64 = base64.b64encode(buffer.getvalue()).decode()
-    buffer.close()
+def save_chart_to_file(fig, filename):
+    """Save matplotlib figure to PNG file"""
+    assets_dir = Path("assets")
+    assets_dir.mkdir(exist_ok=True)
+    
+    filepath = assets_dir / f"{filename}.png"
+    fig.savefig(filepath, format='png', dpi=300, bbox_inches='tight', 
+                facecolor='none', transparent=True)
     plt.close(fig)
-    return image_base64
+    return f"assets/{filename}.png"
 
-def create_correlation_heatmap(correlation_matrix, title):
-    """Create correlation heatmap and return base64 image"""
+def create_correlation_heatmap(correlation_matrix, title, filename):
+    """Create correlation heatmap and return file path"""
     plt.style.use('dark_background')
     
     fig, ax = plt.subplots(figsize=(10, 8))
@@ -154,10 +155,10 @@ def create_correlation_heatmap(correlation_matrix, title):
     ax.set_title(title, fontsize=16, fontweight='bold', pad=20, color='white')
     plt.tight_layout()
     
-    return save_chart_to_base64(fig)
+    return save_chart_to_file(fig, filename)
 
-def create_return_distribution_plots(period_returns, symbols, time_frame_days):
-    """Create return distribution plots and return base64 image"""
+def create_return_distribution_plots(period_returns, symbols, time_frame_days, filename):
+    """Create return distribution plots and return file path"""
     plt.style.use('dark_background')
     
     n_stocks = len(symbols)
@@ -218,10 +219,10 @@ def create_return_distribution_plots(period_returns, symbols, time_frame_days):
                  fontsize=16, fontweight='bold', color='white')
     plt.tight_layout()
     
-    return save_chart_to_base64(fig)
+    return save_chart_to_file(fig, filename)
 
-def create_return_comparison_chart(return_stats, symbols, time_frame_days):
-    """Create comprehensive return comparison charts and return base64 image"""
+def create_return_comparison_chart(return_stats, symbols, time_frame_days, filename):
+    """Create comprehensive return comparison charts and return file path"""
     plt.style.use('dark_background')
     
     # Extract data for plotting
@@ -299,7 +300,7 @@ def create_return_comparison_chart(return_stats, symbols, time_frame_days):
                  fontsize=16, fontweight='bold', color='white')
     plt.tight_layout()
     
-    return save_chart_to_base64(fig)
+    return save_chart_to_file(fig, filename)
 
 def calculate_return_statistics(period_returns, symbols, lookback_days, risk_free_rate=0.02):
     """
@@ -402,14 +403,14 @@ def generate_assets(stock_data, period_returns, symbols, data_period, time_frame
     charts = []
     
     # Return distribution chart
-    dist_chart = create_return_distribution_plots(period_returns, symbols, time_frame_days)
+    dist_chart = create_return_distribution_plots(period_returns, symbols, time_frame_days, "correlation_return_distribution")
     charts.append({
         "title": f"Return Distribution Analysis ({time_frame_days}-Day Periods)",
         "image": dist_chart
     })
     
     # Return comparison chart
-    comp_chart = create_return_comparison_chart(return_stats, symbols, time_frame_days)
+    comp_chart = create_return_comparison_chart(return_stats, symbols, time_frame_days, "correlation_return_comparison")
     charts.append({
         "title": f"Comprehensive Return Analysis ({time_frame_days}-Day Periods)",
         "image": comp_chart
@@ -418,7 +419,7 @@ def generate_assets(stock_data, period_returns, symbols, data_period, time_frame
     # Correlation heatmap (if enabled)
     if env_vars.get('SHOW_CORRELATION_HEATMAP', 'false').lower() == 'true':
         corr_matrix = stock_data.corr()
-        heatmap_chart = create_correlation_heatmap(corr_matrix, f"Stock Correlation Heatmap ({data_period})")
+        heatmap_chart = create_correlation_heatmap(corr_matrix, f"Stock Correlation Heatmap ({data_period})", "correlation_heatmap")
         charts.append({
             "title": f"Stock Correlation Heatmap ({data_period})",
             "image": heatmap_chart
