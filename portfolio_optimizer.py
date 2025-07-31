@@ -18,6 +18,8 @@ import warnings
 from pathlib import Path
 import base64
 import io
+import time
+import threading
 from itertools import combinations
 import json
 
@@ -759,5 +761,69 @@ def main():
     print(f"\\n📄 Portfolio optimization report saved as: {file_path.absolute()}")
     print("🌐 Open this file in your web browser to view the results")
 
-if __name__ == "__main__":
+def run_analysis_once():
+    """Run the portfolio optimization analysis once"""
+    warnings.filterwarnings('ignore')
     main()
+
+def run_scheduler():
+    """Run the analysis on a schedule"""
+    config = load_env_file()
+    interval_hours = int(config.get('SCHEDULE_INTERVAL_HOURS', '4'))
+    
+    print(f"🕐 Starting automatic portfolio optimization scheduler")
+    print(f"📅 Analysis will run every {interval_hours} hours")
+    print(f"⏰ Next run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"🛑 Press Ctrl+C to stop the scheduler")
+    print("=" * 60)
+    
+    try:
+        while True:
+            # Run analysis
+            print(f"\n🚀 Starting scheduled portfolio optimization at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            run_analysis_once()
+            
+            # Calculate next run time
+            next_run = datetime.now() + timedelta(hours=interval_hours)
+            print(f"⏰ Next analysis scheduled for: {next_run.strftime('%Y-%m-%d %H:%M:%S')}")
+            print(f"💤 Sleeping for {interval_hours} hours...")
+            
+            # Sleep for the specified interval
+            time.sleep(interval_hours * 3600)  # Convert hours to seconds
+            
+    except KeyboardInterrupt:
+        print(f"\n🛑 Scheduler stopped by user at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print("👋 Goodbye!")
+
+def main_with_args():
+    """Main function with command line argument handling"""
+    import sys
+    
+    # Check command line arguments
+    if len(sys.argv) > 1:
+        if sys.argv[1].lower() in ['schedule', 'scheduler', '--schedule', '-s']:
+            run_scheduler()
+        elif sys.argv[1].lower() in ['once', '--once', '-o']:
+            run_analysis_once()
+        elif sys.argv[1].lower() in ['help', '--help', '-h']:
+            print("Portfolio Optimizer Tool")
+            print("=" * 40)
+            print("Usage:")
+            print("  python3 portfolio_optimizer.py          # Run once")
+            print("  python3 portfolio_optimizer.py once     # Run once")
+            print("  python3 portfolio_optimizer.py schedule # Run every 4 hours")
+            print("  python3 portfolio_optimizer.py help     # Show this help")
+            print("\nConfiguration:")
+            print("  Edit .env file to change settings:")
+            print("  - SCHEDULE_INTERVAL_HOURS: How often to run (default: 4)")
+            print("  - RANDOM_COMBINATIONS: Number of portfolios to test (default: 15000)")
+            print("  - MAX_PORTFOLIO_BUDGET: Maximum budget for portfolios (default: 70000)")
+        else:
+            print(f"❌ Unknown argument: {sys.argv[1]}")
+            print("Use 'help' to see available options")
+    else:
+        # Default behavior - run once
+        run_analysis_once()
+
+if __name__ == "__main__":
+    main_with_args()

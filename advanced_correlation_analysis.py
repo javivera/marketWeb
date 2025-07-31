@@ -1163,7 +1163,9 @@ def run_analysis_once():
             distribution_plots_b64, comparison_chart_b64
         )
         
-        html_file_path = save_html_report(html_content)
+        # Get HTML filename from config
+        html_filename = config.get('HTML_FILENAME', 'advanced_correlation_analysis.html')
+        html_file_path = save_html_report(html_content, html_filename)
         
         if verbose_output:
             print(f"\n{'='*80}")
