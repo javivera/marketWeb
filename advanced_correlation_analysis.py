@@ -1075,41 +1075,41 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
             risk_color = "#27ae60"
         
         html_content += f"""
-                <div style="margin: 15px 0; padding: 15px; background-color: white; border-radius: 5px; box-shadow: 0 1px 5px rgba(0,0,0,0.1); border-left: 3px solid {risk_color};">
-                    <h3 style="color: #2c3e50; margin-top: 0; font-size: 1.2em;">📈 {symbol} - {time_frame_days}-Day Analysis</h3>
+                <div style="margin: 15px 0; padding: 15px; background: rgba(255, 255, 255, 0.08); backdrop-filter: blur(10px); border-radius: 10px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); border-left: 3px solid {risk_color};">
+                    <h3 style="color: #ffffff; margin-top: 0; font-size: 1.2em;">📈 {symbol} - {time_frame_days}-Day Analysis</h3>
                     
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin: 10px 0;">
                         
-                        <div style="background-color: #f8f9fa; padding: 10px; border-radius: 4px;">
-                            <h4 style="color: #3498db; margin-top: 0; margin-bottom: 8px;">📈 RETURNS</h4>
-                            <p style="margin: 3px 0;"><strong>Mean:</strong> <span class="{'positive' if stats['mean_return'] > 0 else 'negative' if stats['mean_return'] < 0 else 'neutral'}">{stats['mean_return']:.2f}%</span></p>
-                            <p style="margin: 3px 0;"><strong>Median:</strong> {stats['median_return']:.2f}%</p>
-                            <p style="margin: 3px 0;"><strong>Std Dev:</strong> {stats['std_return']:.2f}%</p>
-                            <p style="margin: 3px 0;"><strong>Periods:</strong> {stats['total_periods']}</p>
+                        <div style="background: rgba(52, 152, 219, 0.15); backdrop-filter: blur(10px); padding: 10px; border-radius: 8px; border: 1px solid rgba(52, 152, 219, 0.3);">
+                            <h4 style="color: #74b9ff; margin-top: 0; margin-bottom: 8px;">📈 RETURNS</h4>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Mean:</strong> <span class="{'positive' if stats['mean_return'] > 0 else 'negative' if stats['mean_return'] < 0 else 'neutral'}">{stats['mean_return']:.2f}%</span></p>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Median:</strong> {stats['median_return']:.2f}%</p>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Std Dev:</strong> {stats['std_return']:.2f}%</p>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Periods:</strong> {stats['total_periods']}</p>
                         </div>
                         
-                        <div style="background-color: #e8f5e8; padding: 10px; border-radius: 4px;">
-                            <h4 style="color: #27ae60; margin-top: 0; margin-bottom: 8px;">✅ POSITIVE</h4>
-                            <p style="margin: 3px 0;"><strong>Count:</strong> {stats['positive_periods']} ({stats['positive_rate']:.1f}%)</p>
-                            <p style="margin: 3px 0;"><strong>Mean:</strong> <span class="positive">{stats['mean_positive_return']:.2f}%</span></p>
-                            <p style="margin: 3px 0;"><strong>Median:</strong> {stats['median_positive_return']:.2f}%</p>
-                            <p style="margin: 3px 0;"><strong>Max:</strong> <span class="positive">{stats['max_positive_return']:.2f}%</span></p>
+                        <div style="background: rgba(46, 204, 113, 0.15); backdrop-filter: blur(10px); padding: 10px; border-radius: 8px; border: 1px solid rgba(46, 204, 113, 0.3);">
+                            <h4 style="color: #00b894; margin-top: 0; margin-bottom: 8px;">✅ POSITIVE</h4>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Count:</strong> {stats['positive_periods']} ({stats['positive_rate']:.1f}%)</p>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Mean:</strong> <span class="positive">{stats['mean_positive_return']:.2f}%</span></p>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Median:</strong> {stats['median_positive_return']:.2f}%</p>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Max:</strong> <span class="positive">{stats['max_positive_return']:.2f}%</span></p>
                         </div>
                         
-                        <div style="background-color: #fdf2f2; padding: 10px; border-radius: 4px;">
-                            <h4 style="color: #e74c3c; margin-top: 0; margin-bottom: 8px;">❌ NEGATIVE</h4>
-                            <p style="margin: 3px 0;"><strong>Count:</strong> {stats['negative_periods']} ({stats['negative_rate']:.1f}%)</p>
-                            <p style="margin: 3px 0;"><strong>Mean:</strong> <span class="negative">{stats['mean_negative_return']:.2f}%</span></p>
-                            <p style="margin: 3px 0;"><strong>Median:</strong> {stats['median_negative_return']:.2f}%</p>
-                            <p style="margin: 3px 0;"><strong>Min:</strong> <span class="negative">{stats['max_negative_return']:.2f}%</span></p>
+                        <div style="background: rgba(231, 76, 60, 0.15); backdrop-filter: blur(10px); padding: 10px; border-radius: 8px; border: 1px solid rgba(231, 76, 60, 0.3);">
+                            <h4 style="color: #ff7675; margin-top: 0; margin-bottom: 8px;">❌ NEGATIVE</h4>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Count:</strong> {stats['negative_periods']} ({stats['negative_rate']:.1f}%)</p>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Mean:</strong> <span class="negative">{stats['mean_negative_return']:.2f}%</span></p>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Median:</strong> {stats['median_negative_return']:.2f}%</p>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Min:</strong> <span class="negative">{stats['max_negative_return']:.2f}%</span></p>
                         </div>
                         
-                        <div style="background-color: #f0f4f8; padding: 10px; border-radius: 4px;">
-                            <h4 style="color: #34495e; margin-top: 0; margin-bottom: 8px;">📊 RISK</h4>
-                            <p style="margin: 3px 0;"><strong>Volatility:</strong> {stats['volatility']:.2f}%</p>
-                            <p style="margin: 3px 0;"><strong>Sharpe:</strong> {stats['sharpe_ratio']:.3f}</p>
-                            <p style="margin: 3px 0;"><strong>Sortino:</strong> {stats['sortino_ratio']:.3f}</p>
-                            <p style="margin: 3px 0;"><strong>Risk:</strong> <span style="color: {risk_color}; font-weight: bold;">{risk_level}</span></p>
+                        <div style="background: rgba(108, 117, 125, 0.15); backdrop-filter: blur(10px); padding: 10px; border-radius: 8px; border: 1px solid rgba(108, 117, 125, 0.3);">
+                            <h4 style="color: #a29bfe; margin-top: 0; margin-bottom: 8px;">📊 RISK</h4>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Volatility:</strong> {stats['volatility']:.2f}%</p>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Sharpe:</strong> {stats['sharpe_ratio']:.3f}</p>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Sortino:</strong> {stats['sortino_ratio']:.3f}</p>
+                            <p style="margin: 3px 0; color: #e8e9ea;"><strong>Risk:</strong> <span style="color: {risk_color}; font-weight: bold;">{risk_level}</span></p>
                         </div>
                         
                     </div>
