@@ -185,8 +185,8 @@ def run_portfolio_optimization(stock_symbols, stock_data, returns_data, current_
             simulation_results = []
             for _ in range(num_simulations):
                 random_returns = np.random.multivariate_normal(
-                    mean_returns * time_horizon,
-                    cov_matrix * time_horizon,
+                    mean_returns.values * time_horizon,
+                    cov_matrix.values * time_horizon,
                     1
                 )[0]
                 portfolio_return = np.dot(weights, random_returns) * 100
