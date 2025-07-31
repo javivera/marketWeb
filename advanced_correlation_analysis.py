@@ -316,7 +316,7 @@ def print_return_statistics_analysis(return_stats, symbols, time_frame_days, dat
 def save_plot_to_base64():
     """Save current matplotlib plot to base64 string for HTML embedding"""
     buffer = io.BytesIO()
-    plt.savefig(buffer, format='png', dpi=300, bbox_inches='tight', facecolor='white')
+    plt.savefig(buffer, format='png', dpi=300, bbox_inches='tight', facecolor='none', transparent=True)
     buffer.seek(0)
     image_base64 = base64.b64encode(buffer.getvalue()).decode()
     buffer.close()
@@ -325,6 +325,9 @@ def save_plot_to_base64():
 
 def create_correlation_heatmap(correlation_matrix, title):
     """Create correlation heatmap and return base64 image"""
+    # Set dark theme for matplotlib
+    plt.style.use('dark_background')
+    
     plt.figure(figsize=(10, 8))
     
     # Create heatmap
@@ -336,13 +339,16 @@ def create_correlation_heatmap(correlation_matrix, title):
                 fmt='.3f',
                 cbar_kws={'label': 'Correlation Coefficient'})
     
-    plt.title(title, fontsize=16, fontweight='bold', pad=20)
+    plt.title(title, fontsize=16, fontweight='bold', pad=20, color='white')
     plt.tight_layout()
     
     return save_plot_to_base64()
 
 def create_return_distribution_plots(period_returns, symbols, time_frame_days):
     """Create return distribution plots and return base64 image"""
+    # Set dark theme for matplotlib
+    plt.style.use('dark_background')
+    
     n_stocks = len(symbols)
     
     if n_stocks <= 4:
@@ -393,13 +399,15 @@ def create_return_distribution_plots(period_returns, symbols, time_frame_days):
         axes[i].set_visible(False)
     
     plt.suptitle(f'Return Distribution Analysis ({time_frame_days}-Day Periods)', 
-                 fontsize=16, fontweight='bold')
+                 fontsize=16, fontweight='bold', color='white')
     plt.tight_layout()
     
     return save_plot_to_base64()
 
 def create_return_comparison_chart(return_stats, symbols, time_frame_days):
     """Create comprehensive return comparison charts and return base64 image"""
+    # Set dark theme for matplotlib
+    plt.style.use('dark_background')
     
     # Extract data for plotting
     mean_returns = [return_stats[symbol]['mean_return'] for symbol in symbols if symbol in return_stats]
@@ -469,7 +477,7 @@ def create_return_comparison_chart(return_stats, symbols, time_frame_days):
                 f'{vol:.1f}%', ha='center', va='bottom', fontweight='bold')
     
     plt.suptitle(f'Comprehensive Return Analysis ({time_frame_days}-Day Periods)', 
-                 fontsize=16, fontweight='bold')
+                 fontsize=16, fontweight='bold', color='white')
     plt.tight_layout()
     
     return save_plot_to_base64()
@@ -790,7 +798,8 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
                 padding: 0;
                 overflow: hidden;
                 transition: max-height 0.3s ease-out;
-                background-color: #fafafa;
+                background: rgba(255, 255, 255, 0.08);
+                backdrop-filter: blur(10px);
                 border-radius: 0 0 5px 5px;
                 border-left: 3px solid #3498db;
             }}
