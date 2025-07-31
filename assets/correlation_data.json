@@ -1,5 +1,5 @@
 {
-  "generation_date": "2025-07-30 22:39:54",
+  "generation_date": "2025-07-30 22:44:21",
   "data_period": "5y",
   "time_frame_days": 28,
   "symbols": [
@@ -21,32 +21,32 @@
   "summary_stats": [
     {
       "symbol": "NVDA",
-      "mean_return": 8.24841952836172,
-      "median_return": 5.426820838468378,
-      "std_return": 20.405798179447213,
-      "volatility": 61.21739453834164,
-      "sharpe_ratio": 1.139149685823016,
-      "sortino_ratio": 2.0841096405298614,
+      "mean_return": 8.24841973646326,
+      "median_return": 5.426817328396366,
+      "std_return": 20.40579917266946,
+      "volatility": 61.21739751800838,
+      "sharpe_ratio": 1.1391496609710516,
+      "sortino_ratio": 2.0841092583825795,
       "total_periods": 44,
       "positive_periods": 28,
       "negative_periods": 16,
       "positive_rate": 63.63636363636363,
       "negative_rate": 36.36363636363637,
       "max_positive_return": 48.953312265573125,
-      "max_negative_return": -39.05299060775179,
-      "mean_positive_return": 19.3595957582285,
-      "mean_negative_return": -11.196138873905152,
-      "median_positive_return": 15.727406983859344,
-      "median_negative_return": -5.48325231417005
+      "max_negative_return": -39.052993342153705,
+      "mean_positive_return": 19.359596520825043,
+      "mean_negative_return": -11.196139636169873,
+      "median_positive_return": 15.727398277839125,
+      "median_negative_return": -5.483258791128424
     },
     {
       "symbol": "SOXL",
-      "mean_return": 7.181659067527391,
-      "median_return": 3.513232310133154,
-      "std_return": 34.58962843742811,
-      "volatility": 103.76888531228434,
-      "sharpe_ratio": 0.5795083124076658,
-      "sortino_ratio": 1.0723936974388553,
+      "mean_return": 7.181659944082258,
+      "median_return": 3.513251377835623,
+      "std_return": 34.58962984974774,
+      "volatility": 103.76888954924321,
+      "sharpe_ratio": 0.5795083647705749,
+      "sortino_ratio": 1.0723936342486697,
       "total_periods": 44,
       "positive_periods": 26,
       "negative_periods": 18,
@@ -54,10 +54,10 @@
       "negative_rate": 40.909090909090914,
       "max_positive_return": 100.98362263503088,
       "max_negative_return": -65.08783564618865,
-      "mean_positive_return": 29.172327994351576,
-      "mean_negative_return": -24.582640493440884,
-      "median_positive_return": 28.655535263358026,
-      "median_negative_return": -21.975018632594875
+      "mean_positive_return": 29.172330335890386,
+      "mean_negative_return": -24.582641732973926,
+      "median_positive_return": 28.655544810384235,
+      "median_negative_return": -21.97503269513395
     },
     {
       "symbol": "TSLA",
@@ -81,12 +81,12 @@
     },
     {
       "symbol": "TSM",
-      "mean_return": 3.472089190767092,
-      "median_return": 2.7132990495287457,
-      "std_return": 13.254142210811702,
-      "volatility": 39.76242663243511,
-      "sharpe_ratio": 0.6727155503905847,
-      "sortino_ratio": 1.2710666088791396,
+      "mean_return": 3.472089171352884,
+      "median_return": 2.713303607696801,
+      "std_return": 13.254141380484084,
+      "volatility": 39.76242414145225,
+      "sharpe_ratio": 0.6727155881396673,
+      "sortino_ratio": 1.2710659899685242,
       "total_periods": 44,
       "positive_periods": 27,
       "negative_periods": 17,
@@ -94,30 +94,30 @@
       "negative_rate": 38.63636363636363,
       "max_positive_return": 32.872684992594,
       "max_negative_return": -24.602038202884287,
-      "mean_positive_return": 11.387282271580878,
-      "mean_negative_return": -9.099099819937157,
-      "median_positive_return": 8.258430857419391,
-      "median_negative_return": -6.213797166052834
+      "mean_positive_return": 11.387282991935011,
+      "mean_negative_return": -9.099101014277558,
+      "median_positive_return": 8.258437349369991,
+      "median_negative_return": -6.21381948363492
     },
     {
       "symbol": "META",
-      "mean_return": 3.413710792034604,
-      "median_return": 4.642808577855394,
-      "std_return": 13.682063359618384,
-      "volatility": 41.046190078855155,
-      "sharpe_ratio": 0.6388753031141946,
-      "sortino_ratio": 0.8557135645227572,
+      "mean_return": 3.4137111035630245,
+      "median_return": 4.642822943133357,
+      "std_return": 13.682064153383472,
+      "volatility": 41.046192460150415,
+      "sharpe_ratio": 0.6388753343571669,
+      "sortino_ratio": 0.8557139430928852,
       "total_periods": 44,
       "positive_periods": 31,
       "negative_periods": 13,
       "positive_rate": 70.45454545454545,
       "negative_rate": 29.545454545454547,
-      "max_positive_return": 29.387592964925414,
+      "max_positive_return": 29.387584771114916,
       "max_negative_return": -37.159759151718404,
-      "mean_positive_return": 10.15847783363052,
-      "mean_negative_return": -12.669964461001813,
-      "median_positive_return": 8.319790852472103,
-      "median_negative_return": -10.010826329900095
+      "mean_positive_return": 10.158480912019707,
+      "mean_negative_return": -12.669970747372137,
+      "median_positive_return": 8.319797348705327,
+      "median_negative_return": -10.010833621662705
     },
     {
       "symbol": "AMD",
@@ -141,32 +141,32 @@
     },
     {
       "symbol": "MSFT",
-      "mean_return": 2.4353688308598938,
-      "median_return": 3.2192789529725454,
-      "std_return": 8.030895949566212,
-      "volatility": 24.092687848698635,
-      "sharpe_ratio": 0.7229712013506161,
-      "sortino_ratio": 1.2143524233793452,
+      "mean_return": 2.4353689165274055,
+      "median_return": 3.2192708383213553,
+      "std_return": 8.030894881913767,
+      "volatility": 24.0926846457413,
+      "sharpe_ratio": 0.7229713294664141,
+      "sortino_ratio": 1.2143537517757894,
       "total_periods": 44,
       "positive_periods": 27,
       "negative_periods": 17,
       "positive_rate": 61.36363636363637,
       "negative_rate": 38.63636363636363,
       "max_positive_return": 27.173745146036676,
-      "max_negative_return": -15.49091138447265,
-      "mean_positive_return": 7.326775419568065,
-      "mean_negative_return": -5.333335751206028,
-      "median_positive_return": 7.2728128212525345,
-      "median_negative_return": -2.7668925242902835
+      "max_negative_return": -15.490909808572454,
+      "mean_positive_return": 7.326776227968397,
+      "mean_negative_return": -5.3333368134082875,
+      "median_positive_return": 7.272775447769192,
+      "median_negative_return": -2.7669042255852903
     },
     {
       "symbol": "GOOG",
-      "mean_return": 2.3590649642214028,
-      "median_return": 3.489881566409557,
-      "std_return": 8.190916967870466,
-      "volatility": 24.5727509036114,
-      "sharpe_ratio": 0.6808999425267288,
-      "sortino_ratio": 0.9577857521773767,
+      "mean_return": 2.3590648954865623,
+      "median_return": 3.489881976217845,
+      "std_return": 8.190916059145483,
+      "volatility": 24.57274817743645,
+      "sharpe_ratio": 0.6808999928930449,
+      "sortino_ratio": 0.9577853112251882,
       "total_periods": 44,
       "positive_periods": 31,
       "negative_periods": 13,
@@ -174,59 +174,59 @@
       "negative_rate": 29.545454545454547,
       "max_positive_return": 16.876471931828778,
       "max_negative_return": -18.394977175725316,
-      "mean_positive_return": 6.434152419329867,
-      "mean_negative_return": -7.358451274883397,
-      "median_positive_return": 4.740043420157373,
-      "median_negative_return": -5.849961281238221
+      "mean_positive_return": 6.434150989953315,
+      "mean_negative_return": -7.358448099011079,
+      "median_positive_return": 4.740035899604321,
+      "median_negative_return": -5.849950852477458
     },
     {
       "symbol": "QQQ",
-      "mean_return": 2.0325039611212783,
-      "median_return": 2.9932870758676273,
-      "std_return": 7.83729753529704,
-      "volatility": 23.51189260589112,
-      "sharpe_ratio": 0.5866195410673005,
-      "sortino_ratio": 0.7131607956515085,
+      "mean_return": 2.032504810963398,
+      "median_return": 2.9932828140469345,
+      "std_return": 7.837301271035803,
+      "volatility": 23.51190381310741,
+      "sharpe_ratio": 0.5866195867550938,
+      "sortino_ratio": 0.7131604528707594,
       "total_periods": 44,
       "positive_periods": 30,
       "negative_periods": 14,
       "positive_rate": 68.18181818181817,
       "negative_rate": 31.818181818181817,
       "max_positive_return": 23.087642908273274,
-      "max_negative_return": -19.501300071189767,
-      "mean_positive_return": 6.015436251382925,
-      "mean_negative_return": -6.502350946582254,
-      "median_positive_return": 5.255733502245081,
-      "median_negative_return": -4.229694137741783
+      "max_negative_return": -19.501291470275543,
+      "mean_positive_return": 6.0154383794279305,
+      "mean_negative_return": -6.502352835746313,
+      "median_positive_return": 5.255725588990808,
+      "median_negative_return": -4.229709969952848
     },
     {
       "symbol": "AAPL",
-      "mean_return": 1.887590898206014,
-      "median_return": 2.464684079288202,
-      "std_return": 8.471433021597608,
-      "volatility": 25.414299064792825,
-      "sharpe_ratio": 0.49138943600276425,
-      "sortino_ratio": 0.6317319558262773,
+      "mean_return": 1.8875911186563301,
+      "median_return": 2.4646744588595624,
+      "std_return": 8.471431155318827,
+      "volatility": 25.414293465956483,
+      "sharpe_ratio": 0.49138962232554695,
+      "sortino_ratio": 0.6317317241643624,
       "total_periods": 44,
       "positive_periods": 28,
       "negative_periods": 16,
       "positive_rate": 63.63636363636363,
       "negative_rate": 36.36363636363637,
-      "max_positive_return": 18.219438741404012,
+      "max_positive_return": 18.21941374558331,
       "max_negative_return": -24.504902647238175,
-      "mean_positive_return": 6.7404239377517134,
-      "mean_negative_return": -6.604866920998958,
-      "median_positive_return": 5.8566357724446565,
-      "median_negative_return": -3.800274616220687
+      "mean_positive_return": 6.740422835351249,
+      "mean_negative_return": -6.604864385559777,
+      "median_positive_return": 5.856631873609889,
+      "median_negative_return": -3.800274728013325
     },
     {
       "symbol": "SPY",
-      "mean_return": 1.7896870354396517,
-      "median_return": 2.4001193037621986,
-      "std_return": 5.96960894095788,
-      "volatility": 17.90882682287364,
-      "sharpe_ratio": 0.6481263922956614,
-      "sortino_ratio": 0.7900949909710488,
+      "mean_return": 1.7896874934399796,
+      "median_return": 2.400121464440184,
+      "std_return": 5.969612648110955,
+      "volatility": 17.908837944332866,
+      "sharpe_ratio": 0.6481262199724597,
+      "sortino_ratio": 0.7900943069758607,
       "total_periods": 44,
       "positive_periods": 34,
       "negative_periods": 10,
@@ -234,10 +234,10 @@
       "negative_rate": 22.727272727272727,
       "max_positive_return": 17.80799921936101,
       "max_negative_return": -14.909457733689061,
-      "mean_positive_return": 4.220800217626554,
-      "mean_negative_return": -6.476097783995814,
-      "median_positive_return": 3.5576892416966057,
-      "median_negative_return": -5.270139275756038
+      "mean_positive_return": 4.22080205468651,
+      "mean_negative_return": -6.476102014798229,
+      "median_positive_return": 3.5576657604612434,
+      "median_negative_return": -5.270128026319048
     },
     {
       "symbol": "AMZN",
@@ -261,12 +261,12 @@
     },
     {
       "symbol": "EWZ",
-      "mean_return": 0.9021800520051332,
-      "median_return": -1.7824595061784563,
-      "std_return": 9.096656963373837,
-      "volatility": 27.28997089012151,
-      "sharpe_ratio": 0.13263555621293965,
-      "sortino_ratio": 0.3017392814389345,
+      "mean_return": 0.9021801511853673,
+      "median_return": -1.7824595572705042,
+      "std_return": 9.096658044414587,
+      "volatility": 27.28997413324376,
+      "sharpe_ratio": 0.1326355731594117,
+      "sortino_ratio": 0.301739274466081,
       "total_periods": 44,
       "positive_periods": 19,
       "negative_periods": 25,
@@ -274,19 +274,19 @@
       "negative_rate": 56.81818181818182,
       "max_positive_return": 21.971090618919213,
       "max_negative_return": -18.88388608454759,
-      "mean_positive_return": 9.470939379318496,
-      "mean_negative_return": -5.610077036753022,
+      "mean_positive_return": 9.470941045144357,
+      "mean_negative_return": -5.610078128223464,
       "median_positive_return": 10.346114457505474,
-      "median_negative_return": -4.341923120293194
+      "median_negative_return": -4.34191589065109
     },
     {
       "symbol": "EEM",
-      "mean_return": 0.694466778865642,
-      "median_return": 0.6018767749513271,
-      "std_return": 6.391568604342262,
-      "volatility": 19.174705813026787,
-      "sharpe_ratio": 0.09127655082988227,
-      "sortino_ratio": 0.15026552076864175,
+      "mean_return": 0.6944666956639101,
+      "median_return": 0.6018820024461516,
+      "std_return": 6.391567381472488,
+      "volatility": 19.174702144417463,
+      "sharpe_ratio": 0.09127652924114625,
+      "sortino_ratio": 0.150265567689111,
       "total_periods": 44,
       "positive_periods": 25,
       "negative_periods": 18,
@@ -294,10 +294,10 @@
       "negative_rate": 40.909090909090914,
       "max_positive_return": 18.402862703240704,
       "max_negative_return": -12.55595477222538,
-      "mean_positive_return": 4.870286986036717,
-      "mean_negative_return": -5.066702021157205,
-      "median_positive_return": 4.54563308436353,
-      "median_negative_return": -4.00000999833033
+      "mean_positive_return": 4.8702867122808415,
+      "mean_negative_return": -5.066701844322721,
+      "median_positive_return": 4.545641199768484,
+      "median_negative_return": -4.000012650632393
     }
   ],
   "charts": [
@@ -318,61 +318,61 @@
       },
       {
         "symbol": "MSFT",
-        "correlation": 0.8998737465970661
+        "correlation": 0.899873753527612
       },
       {
         "symbol": "GOOG",
-        "correlation": 0.8706777047928425
+        "correlation": 0.8706777134529141
       },
       {
         "symbol": "AMZN",
-        "correlation": 0.552866932567916
+        "correlation": 0.5528669447555927
       },
       {
         "symbol": "TSLA",
-        "correlation": 0.49424025619287365
+        "correlation": 0.4942402579118352
       },
       {
         "symbol": "META",
-        "correlation": 0.7600702526192114
+        "correlation": 0.7600702608433494
       },
       {
         "symbol": "NVDA",
-        "correlation": 0.8836411012388683
+        "correlation": 0.8836411057722197
       },
       {
         "symbol": "AMD",
-        "correlation": 0.6387054116407396
+        "correlation": 0.6387054159028138
       },
       {
         "symbol": "SPY",
-        "correlation": 0.9185830188424337
+        "correlation": 0.918583028802717
       },
       {
         "symbol": "TSM",
-        "correlation": 0.7802129037123677
+        "correlation": 0.7802129097078898
       },
       {
         "symbol": "SOXL",
-        "correlation": 0.13918137694005026
+        "correlation": 0.13918138167648017
       },
       {
         "symbol": "QQQ",
-        "correlation": 0.8887732237556737
+        "correlation": 0.8887732359433074
       },
       {
         "symbol": "EEM",
-        "correlation": -0.0374887104110709
+        "correlation": -0.03748866514205577
       },
       {
         "symbol": "EWZ",
-        "correlation": 0.40356362226116016
+        "correlation": 0.40356361464443546
       }
     ],
     [
       {
         "symbol": "AAPL",
-        "correlation": 0.8998737465970661
+        "correlation": 0.899873753527612
       },
       {
         "symbol": "MSFT",
@@ -380,61 +380,61 @@
       },
       {
         "symbol": "GOOG",
-        "correlation": 0.9210541943890447
+        "correlation": 0.9210541854166496
       },
       {
         "symbol": "AMZN",
-        "correlation": 0.6595633171658917
+        "correlation": 0.6595633124819594
       },
       {
         "symbol": "TSLA",
-        "correlation": 0.3897015232105037
+        "correlation": 0.3897015184845087
       },
       {
         "symbol": "META",
-        "correlation": 0.8637835888327732
+        "correlation": 0.8637835818302324
       },
       {
         "symbol": "NVDA",
-        "correlation": 0.9289413538187496
+        "correlation": 0.9289413522352038
       },
       {
         "symbol": "AMD",
-        "correlation": 0.79917506934099
+        "correlation": 0.7991750774852593
       },
       {
         "symbol": "SPY",
-        "correlation": 0.9567615682338136
+        "correlation": 0.9567615665690338
       },
       {
         "symbol": "TSM",
-        "correlation": 0.8423964068348898
+        "correlation": 0.8423964015049893
       },
       {
         "symbol": "SOXL",
-        "correlation": 0.2801601405529165
+        "correlation": 0.28016013768662945
       },
       {
         "symbol": "QQQ",
-        "correlation": 0.9567182574294257
+        "correlation": 0.9567182565568679
       },
       {
         "symbol": "EEM",
-        "correlation": 0.09120425542075676
+        "correlation": 0.09120426399404033
       },
       {
         "symbol": "EWZ",
-        "correlation": 0.5001559030731284
+        "correlation": 0.5001559062799602
       }
     ],
     [
       {
         "symbol": "AAPL",
-        "correlation": 0.8706777047928425
+        "correlation": 0.8706777134529141
       },
       {
         "symbol": "MSFT",
-        "correlation": 0.9210541943890447
+        "correlation": 0.9210541854166496
       },
       {
         "symbol": "GOOG",
@@ -442,61 +442,61 @@
       },
       {
         "symbol": "AMZN",
-        "correlation": 0.7486876530598705
+        "correlation": 0.7486876572794269
       },
       {
         "symbol": "TSLA",
-        "correlation": 0.5544353215073632
+        "correlation": 0.5544353262078061
       },
       {
         "symbol": "META",
-        "correlation": 0.8524996327302026
+        "correlation": 0.852499631442244
       },
       {
         "symbol": "NVDA",
-        "correlation": 0.8665610828206602
+        "correlation": 0.8665610842751658
       },
       {
         "symbol": "AMD",
-        "correlation": 0.7203941263882393
+        "correlation": 0.7203941160801601
       },
       {
         "symbol": "SPY",
-        "correlation": 0.9426104710278149
+        "correlation": 0.9426104647785961
       },
       {
         "symbol": "TSM",
-        "correlation": 0.8600817513927036
+        "correlation": 0.8600817533718517
       },
       {
         "symbol": "SOXL",
-        "correlation": 0.4289028297744531
+        "correlation": 0.42890281665333524
       },
       {
         "symbol": "QQQ",
-        "correlation": 0.9447700917840278
+        "correlation": 0.9447700991153379
       },
       {
         "symbol": "EEM",
-        "correlation": 0.25893022680698563
+        "correlation": 0.2589302602049577
       },
       {
         "symbol": "EWZ",
-        "correlation": 0.3885578066094828
+        "correlation": 0.3885578131127664
       }
     ],
     [
       {
         "symbol": "AAPL",
-        "correlation": 0.552866932567916
+        "correlation": 0.5528669447555927
       },
       {
         "symbol": "MSFT",
-        "correlation": 0.6595633171658917
+        "correlation": 0.6595633124819594
       },
       {
         "symbol": "GOOG",
-        "correlation": 0.7486876530598705
+        "correlation": 0.7486876572794269
       },
       {
         "symbol": "AMZN",
@@ -508,11 +508,11 @@
       },
       {
         "symbol": "META",
-        "correlation": 0.8876062832374625
+        "correlation": 0.8876062817682733
       },
       {
         "symbol": "NVDA",
-        "correlation": 0.7273371945919788
+        "correlation": 0.7273371946072762
       },
       {
         "symbol": "AMD",
@@ -520,41 +520,41 @@
       },
       {
         "symbol": "SPY",
-        "correlation": 0.7315455028958653
+        "correlation": 0.7315454827134885
       },
       {
         "symbol": "TSM",
-        "correlation": 0.847665276268226
+        "correlation": 0.8476652715153109
       },
       {
         "symbol": "SOXL",
-        "correlation": 0.4853075554768483
+        "correlation": 0.48530754814592025
       },
       {
         "symbol": "QQQ",
-        "correlation": 0.8141060196603508
+        "correlation": 0.8141060208252011
       },
       {
         "symbol": "EEM",
-        "correlation": 0.6233348394856927
+        "correlation": 0.6233348037012691
       },
       {
         "symbol": "EWZ",
-        "correlation": 0.15097808306307114
+        "correlation": 0.15097807266304603
       }
     ],
     [
       {
         "symbol": "AAPL",
-        "correlation": 0.49424025619287365
+        "correlation": 0.4942402579118352
       },
       {
         "symbol": "MSFT",
-        "correlation": 0.3897015232105037
+        "correlation": 0.3897015184845087
       },
       {
         "symbol": "GOOG",
-        "correlation": 0.5544353215073632
+        "correlation": 0.5544353262078061
       },
       {
         "symbol": "AMZN",
@@ -566,11 +566,11 @@
       },
       {
         "symbol": "META",
-        "correlation": 0.3670306286245562
+        "correlation": 0.3670306297714061
       },
       {
         "symbol": "NVDA",
-        "correlation": 0.34593667227292807
+        "correlation": 0.34593667050678867
       },
       {
         "symbol": "AMD",
@@ -578,49 +578,49 @@
       },
       {
         "symbol": "SPY",
-        "correlation": 0.4834808117928423
+        "correlation": 0.4834808135873331
       },
       {
         "symbol": "TSM",
-        "correlation": 0.4738465046084625
+        "correlation": 0.4738465037908152
       },
       {
         "symbol": "SOXL",
-        "correlation": 0.2839604721995751
+        "correlation": 0.28396047625289506
       },
       {
         "symbol": "QQQ",
-        "correlation": 0.48677136836605345
+        "correlation": 0.48677139554093113
       },
       {
         "symbol": "EEM",
-        "correlation": 0.30095487314042924
+        "correlation": 0.3009549396674804
       },
       {
         "symbol": "EWZ",
-        "correlation": -0.01637644980018545
+        "correlation": -0.01637644814884808
       }
     ],
     [
       {
         "symbol": "AAPL",
-        "correlation": 0.7600702526192114
+        "correlation": 0.7600702608433494
       },
       {
         "symbol": "MSFT",
-        "correlation": 0.8637835888327732
+        "correlation": 0.8637835818302324
       },
       {
         "symbol": "GOOG",
-        "correlation": 0.8524996327302026
+        "correlation": 0.852499631442244
       },
       {
         "symbol": "AMZN",
-        "correlation": 0.8876062832374625
+        "correlation": 0.8876062817682733
       },
       {
         "symbol": "TSLA",
-        "correlation": 0.3670306286245562
+        "correlation": 0.3670306297714061
       },
       {
         "symbol": "META",
@@ -628,61 +628,61 @@
       },
       {
         "symbol": "NVDA",
-        "correlation": 0.9193512732992505
+        "correlation": 0.9193512722824857
       },
       {
         "symbol": "AMD",
-        "correlation": 0.6395706033709115
+        "correlation": 0.6395705950506566
       },
       {
         "symbol": "SPY",
-        "correlation": 0.9101861790952348
+        "correlation": 0.9101861658224938
       },
       {
         "symbol": "TSM",
-        "correlation": 0.941211961386321
+        "correlation": 0.9412119572048662
       },
       {
         "symbol": "SOXL",
-        "correlation": 0.3038952369003641
+        "correlation": 0.3038952189461796
       },
       {
         "symbol": "QQQ",
-        "correlation": 0.9529249777564842
+        "correlation": 0.9529249712375591
       },
       {
         "symbol": "EEM",
-        "correlation": 0.4167093605127162
+        "correlation": 0.41670934283967637
       },
       {
         "symbol": "EWZ",
-        "correlation": 0.310805900998292
+        "correlation": 0.3108058936422192
       }
     ],
     [
       {
         "symbol": "AAPL",
-        "correlation": 0.8836411012388683
+        "correlation": 0.8836411057722197
       },
       {
         "symbol": "MSFT",
-        "correlation": 0.9289413538187496
+        "correlation": 0.9289413522352038
       },
       {
         "symbol": "GOOG",
-        "correlation": 0.8665610828206602
+        "correlation": 0.8665610842751658
       },
       {
         "symbol": "AMZN",
-        "correlation": 0.7273371945919788
+        "correlation": 0.7273371946072762
       },
       {
         "symbol": "TSLA",
-        "correlation": 0.34593667227292807
+        "correlation": 0.34593667050678867
       },
       {
         "symbol": "META",
-        "correlation": 0.9193512732992505
+        "correlation": 0.9193512722824857
       },
       {
         "symbol": "NVDA",
@@ -690,45 +690,45 @@
       },
       {
         "symbol": "AMD",
-        "correlation": 0.6542945386741986
+        "correlation": 0.6542945401198793
       },
       {
         "symbol": "SPY",
-        "correlation": 0.960467537881925
+        "correlation": 0.9604675382899991
       },
       {
         "symbol": "TSM",
-        "correlation": 0.9321080983287029
+        "correlation": 0.9321080992328898
       },
       {
         "symbol": "SOXL",
-        "correlation": 0.1536130415459634
+        "correlation": 0.15361303859488604
       },
       {
         "symbol": "QQQ",
-        "correlation": 0.9541452849103023
+        "correlation": 0.9541452823246431
       },
       {
         "symbol": "EEM",
-        "correlation": 0.15705364159831314
+        "correlation": 0.1570536354169365
       },
       {
         "symbol": "EWZ",
-        "correlation": 0.34779028647870214
+        "correlation": 0.34779027883929814
       }
     ],
     [
       {
         "symbol": "AAPL",
-        "correlation": 0.6387054116407396
+        "correlation": 0.6387054159028138
       },
       {
         "symbol": "MSFT",
-        "correlation": 0.79917506934099
+        "correlation": 0.7991750774852593
       },
       {
         "symbol": "GOOG",
-        "correlation": 0.7203941263882393
+        "correlation": 0.7203941160801601
       },
       {
         "symbol": "AMZN",
@@ -740,11 +740,11 @@
       },
       {
         "symbol": "META",
-        "correlation": 0.6395706033709115
+        "correlation": 0.6395705950506566
       },
       {
         "symbol": "NVDA",
-        "correlation": 0.6542945386741986
+        "correlation": 0.6542945401198793
       },
       {
         "symbol": "AMD",
@@ -752,61 +752,61 @@
       },
       {
         "symbol": "SPY",
-        "correlation": 0.6920960550345007
+        "correlation": 0.6920960565975591
       },
       {
         "symbol": "TSM",
-        "correlation": 0.5955381126207592
+        "correlation": 0.5955381111306771
       },
       {
         "symbol": "SOXL",
-        "correlation": 0.6228360089394727
+        "correlation": 0.6228360109976603
       },
       {
         "symbol": "QQQ",
-        "correlation": 0.7322156742829905
+        "correlation": 0.7322156782425903
       },
       {
         "symbol": "EEM",
-        "correlation": 0.12839386190949043
+        "correlation": 0.1283938620704637
       },
       {
         "symbol": "EWZ",
-        "correlation": 0.46227033701726417
+        "correlation": 0.4622703330072607
       }
     ],
     [
       {
         "symbol": "AAPL",
-        "correlation": 0.9185830188424337
+        "correlation": 0.918583028802717
       },
       {
         "symbol": "MSFT",
-        "correlation": 0.9567615682338136
+        "correlation": 0.9567615665690338
       },
       {
         "symbol": "GOOG",
-        "correlation": 0.9426104710278149
+        "correlation": 0.9426104647785961
       },
       {
         "symbol": "AMZN",
-        "correlation": 0.7315455028958653
+        "correlation": 0.7315454827134885
       },
       {
         "symbol": "TSLA",
-        "correlation": 0.4834808117928423
+        "correlation": 0.4834808135873331
       },
       {
         "symbol": "META",
-        "correlation": 0.9101861790952348
+        "correlation": 0.9101861658224938
       },
       {
         "symbol": "NVDA",
-        "correlation": 0.960467537881925
+        "correlation": 0.9604675382899991
       },
       {
         "symbol": "AMD",
-        "correlation": 0.6920960550345007
+        "correlation": 0.6920960565975591
       },
       {
         "symbol": "SPY",
@@ -814,61 +814,61 @@
       },
       {
         "symbol": "TSM",
-        "correlation": 0.9268800273202089
+        "correlation": 0.9268800206818647
       },
       {
         "symbol": "SOXL",
-        "correlation": 0.26013754707369835
+        "correlation": 0.26013753218210367
       },
       {
         "symbol": "QQQ",
-        "correlation": 0.9831621642728012
+        "correlation": 0.98316216031094
       },
       {
         "symbol": "EEM",
-        "correlation": 0.2141458581907869
+        "correlation": 0.2141458533865371
       },
       {
         "symbol": "EWZ",
-        "correlation": 0.4135078745154552
+        "correlation": 0.41350786499235337
       }
     ],
     [
       {
         "symbol": "AAPL",
-        "correlation": 0.7802129037123677
+        "correlation": 0.7802129097078898
       },
       {
         "symbol": "MSFT",
-        "correlation": 0.8423964068348898
+        "correlation": 0.8423964015049893
       },
       {
         "symbol": "GOOG",
-        "correlation": 0.8600817513927036
+        "correlation": 0.8600817533718517
       },
       {
         "symbol": "AMZN",
-        "correlation": 0.847665276268226
+        "correlation": 0.8476652715153109
       },
       {
         "symbol": "TSLA",
-        "correlation": 0.4738465046084625
+        "correlation": 0.4738465037908152
       },
       {
         "symbol": "META",
-        "correlation": 0.941211961386321
+        "correlation": 0.9412119572048662
       },
       {
         "symbol": "NVDA",
-        "correlation": 0.9321080983287029
+        "correlation": 0.9321080992328898
       },
       {
         "symbol": "AMD",
-        "correlation": 0.5955381126207592
+        "correlation": 0.5955381111306771
       },
       {
         "symbol": "SPY",
-        "correlation": 0.9268800273202089
+        "correlation": 0.9268800206818647
       },
       {
         "symbol": "TSM",
@@ -876,61 +876,61 @@
       },
       {
         "symbol": "SOXL",
-        "correlation": 0.3223995303738996
+        "correlation": 0.3223995198193883
       },
       {
         "symbol": "QQQ",
-        "correlation": 0.9413801544173557
+        "correlation": 0.9413801478676695
       },
       {
         "symbol": "EEM",
-        "correlation": 0.46778880397471445
+        "correlation": 0.4677888006338812
       },
       {
         "symbol": "EWZ",
-        "correlation": 0.24851738929699874
+        "correlation": 0.24851738003167118
       }
     ],
     [
       {
         "symbol": "AAPL",
-        "correlation": 0.13918137694005026
+        "correlation": 0.13918138167648017
       },
       {
         "symbol": "MSFT",
-        "correlation": 0.2801601405529165
+        "correlation": 0.28016013768662945
       },
       {
         "symbol": "GOOG",
-        "correlation": 0.4289028297744531
+        "correlation": 0.42890281665333524
       },
       {
         "symbol": "AMZN",
-        "correlation": 0.4853075554768483
+        "correlation": 0.48530754814592025
       },
       {
         "symbol": "TSLA",
-        "correlation": 0.2839604721995751
+        "correlation": 0.28396047625289506
       },
       {
         "symbol": "META",
-        "correlation": 0.3038952369003641
+        "correlation": 0.3038952189461796
       },
       {
         "symbol": "NVDA",
-        "correlation": 0.1536130415459634
+        "correlation": 0.15361303859488604
       },
       {
         "symbol": "AMD",
-        "correlation": 0.6228360089394727
+        "correlation": 0.6228360109976603
       },
       {
         "symbol": "SPY",
-        "correlation": 0.26013754707369835
+        "correlation": 0.26013753218210367
       },
       {
         "symbol": "TSM",
-        "correlation": 0.3223995303738996
+        "correlation": 0.3223995198193883
       },
       {
         "symbol": "SOXL",
@@ -938,61 +938,61 @@
       },
       {
         "symbol": "QQQ",
-        "correlation": 0.3406823949685488
+        "correlation": 0.34068238584052557
       },
       {
         "symbol": "EEM",
-        "correlation": 0.5875865550972197
+        "correlation": 0.5875865710585593
       },
       {
         "symbol": "EWZ",
-        "correlation": 0.09246189194890027
+        "correlation": 0.09246188933828961
       }
     ],
     [
       {
         "symbol": "AAPL",
-        "correlation": 0.8887732237556737
+        "correlation": 0.8887732359433074
       },
       {
         "symbol": "MSFT",
-        "correlation": 0.9567182574294257
+        "correlation": 0.9567182565568679
       },
       {
         "symbol": "GOOG",
-        "correlation": 0.9447700917840278
+        "correlation": 0.9447700991153379
       },
       {
         "symbol": "AMZN",
-        "correlation": 0.8141060196603508
+        "correlation": 0.8141060208252011
       },
       {
         "symbol": "TSLA",
-        "correlation": 0.48677136836605345
+        "correlation": 0.48677139554093113
       },
       {
         "symbol": "META",
-        "correlation": 0.9529249777564842
+        "correlation": 0.9529249712375591
       },
       {
         "symbol": "NVDA",
-        "correlation": 0.9541452849103023
+        "correlation": 0.9541452823246431
       },
       {
         "symbol": "AMD",
-        "correlation": 0.7322156742829905
+        "correlation": 0.7322156782425903
       },
       {
         "symbol": "SPY",
-        "correlation": 0.9831621642728012
+        "correlation": 0.98316216031094
       },
       {
         "symbol": "TSM",
-        "correlation": 0.9413801544173557
+        "correlation": 0.9413801478676695
       },
       {
         "symbol": "SOXL",
-        "correlation": 0.3406823949685488
+        "correlation": 0.34068238584052557
       },
       {
         "symbol": "QQQ",
@@ -1000,61 +1000,61 @@
       },
       {
         "symbol": "EEM",
-        "correlation": 0.3014458866151261
+        "correlation": 0.3014458841549653
       },
       {
         "symbol": "EWZ",
-        "correlation": 0.4044021659238043
+        "correlation": 0.40440214535132096
       }
     ],
     [
       {
         "symbol": "AAPL",
-        "correlation": -0.0374887104110709
+        "correlation": -0.03748866514205577
       },
       {
         "symbol": "MSFT",
-        "correlation": 0.09120425542075676
+        "correlation": 0.09120426399404033
       },
       {
         "symbol": "GOOG",
-        "correlation": 0.25893022680698563
+        "correlation": 0.2589302602049577
       },
       {
         "symbol": "AMZN",
-        "correlation": 0.6233348394856927
+        "correlation": 0.6233348037012691
       },
       {
         "symbol": "TSLA",
-        "correlation": 0.30095487314042924
+        "correlation": 0.3009549396674804
       },
       {
         "symbol": "META",
-        "correlation": 0.4167093605127162
+        "correlation": 0.41670934283967637
       },
       {
         "symbol": "NVDA",
-        "correlation": 0.15705364159831314
+        "correlation": 0.1570536354169365
       },
       {
         "symbol": "AMD",
-        "correlation": 0.12839386190949043
+        "correlation": 0.1283938620704637
       },
       {
         "symbol": "SPY",
-        "correlation": 0.2141458581907869
+        "correlation": 0.2141458533865371
       },
       {
         "symbol": "TSM",
-        "correlation": 0.46778880397471445
+        "correlation": 0.4677888006338812
       },
       {
         "symbol": "SOXL",
-        "correlation": 0.5875865550972197
+        "correlation": 0.5875865710585593
       },
       {
         "symbol": "QQQ",
-        "correlation": 0.3014458866151261
+        "correlation": 0.3014458841549653
       },
       {
         "symbol": "EEM",
@@ -1062,61 +1062,61 @@
       },
       {
         "symbol": "EWZ",
-        "correlation": -0.03680568663198809
+        "correlation": -0.03680572133136167
       }
     ],
     [
       {
         "symbol": "AAPL",
-        "correlation": 0.40356362226116016
+        "correlation": 0.40356361464443546
       },
       {
         "symbol": "MSFT",
-        "correlation": 0.5001559030731284
+        "correlation": 0.5001559062799602
       },
       {
         "symbol": "GOOG",
-        "correlation": 0.3885578066094828
+        "correlation": 0.3885578131127664
       },
       {
         "symbol": "AMZN",
-        "correlation": 0.15097808306307114
+        "correlation": 0.15097807266304603
       },
       {
         "symbol": "TSLA",
-        "correlation": -0.01637644980018545
+        "correlation": -0.01637644814884808
       },
       {
         "symbol": "META",
-        "correlation": 0.310805900998292
+        "correlation": 0.3108058936422192
       },
       {
         "symbol": "NVDA",
-        "correlation": 0.34779028647870214
+        "correlation": 0.34779027883929814
       },
       {
         "symbol": "AMD",
-        "correlation": 0.46227033701726417
+        "correlation": 0.4622703330072607
       },
       {
         "symbol": "SPY",
-        "correlation": 0.4135078745154552
+        "correlation": 0.41350786499235337
       },
       {
         "symbol": "TSM",
-        "correlation": 0.24851738929699874
+        "correlation": 0.24851738003167118
       },
       {
         "symbol": "SOXL",
-        "correlation": 0.09246189194890027
+        "correlation": 0.09246188933828961
       },
       {
         "symbol": "QQQ",
-        "correlation": 0.4044021659238043
+        "correlation": 0.40440214535132096
       },
       {
         "symbol": "EEM",
-        "correlation": -0.03680568663198809
+        "correlation": -0.03680572133136167
       },
       {
         "symbol": "EWZ",
@@ -1127,54 +1127,54 @@
   "performance_stats": [
     {
       "symbol": "AAPL",
-      "mean_return": 1.887590898206014,
-      "median_return": 2.464684079288202,
-      "std_return": 8.471433021597608,
-      "volatility": 25.414299064792825,
-      "sharpe_ratio": 0.49138943600276425,
-      "sortino_ratio": 0.6317319558262773,
+      "mean_return": 1.8875911186563301,
+      "median_return": 2.4646744588595624,
+      "std_return": 8.471431155318827,
+      "volatility": 25.414293465956483,
+      "sharpe_ratio": 0.49138962232554695,
+      "sortino_ratio": 0.6317317241643624,
       "total_periods": 44,
       "positive_periods": 28,
       "negative_periods": 16,
       "positive_rate": 63.63636363636363,
       "negative_rate": 36.36363636363637,
-      "max_positive_return": 18.219438741404012,
+      "max_positive_return": 18.21941374558331,
       "max_negative_return": -24.504902647238175,
-      "mean_positive_return": 6.7404239377517134,
-      "mean_negative_return": -6.604866920998958,
-      "median_positive_return": 5.8566357724446565,
-      "median_negative_return": -3.800274616220687,
+      "mean_positive_return": 6.740422835351249,
+      "mean_negative_return": -6.604864385559777,
+      "median_positive_return": 5.856631873609889,
+      "median_negative_return": -3.800274728013325,
       "time_frame_days": 28
     },
     {
       "symbol": "MSFT",
-      "mean_return": 2.4353688308598938,
-      "median_return": 3.2192789529725454,
-      "std_return": 8.030895949566212,
-      "volatility": 24.092687848698635,
-      "sharpe_ratio": 0.7229712013506161,
-      "sortino_ratio": 1.2143524233793452,
+      "mean_return": 2.4353689165274055,
+      "median_return": 3.2192708383213553,
+      "std_return": 8.030894881913767,
+      "volatility": 24.0926846457413,
+      "sharpe_ratio": 0.7229713294664141,
+      "sortino_ratio": 1.2143537517757894,
       "total_periods": 44,
       "positive_periods": 27,
       "negative_periods": 17,
       "positive_rate": 61.36363636363637,
       "negative_rate": 38.63636363636363,
       "max_positive_return": 27.173745146036676,
-      "max_negative_return": -15.49091138447265,
-      "mean_positive_return": 7.326775419568065,
-      "mean_negative_return": -5.333335751206028,
-      "median_positive_return": 7.2728128212525345,
-      "median_negative_return": -2.7668925242902835,
+      "max_negative_return": -15.490909808572454,
+      "mean_positive_return": 7.326776227968397,
+      "mean_negative_return": -5.3333368134082875,
+      "median_positive_return": 7.272775447769192,
+      "median_negative_return": -2.7669042255852903,
       "time_frame_days": 28
     },
     {
       "symbol": "GOOG",
-      "mean_return": 2.3590649642214028,
-      "median_return": 3.489881566409557,
-      "std_return": 8.190916967870466,
-      "volatility": 24.5727509036114,
-      "sharpe_ratio": 0.6808999425267288,
-      "sortino_ratio": 0.9577857521773767,
+      "mean_return": 2.3590648954865623,
+      "median_return": 3.489881976217845,
+      "std_return": 8.190916059145483,
+      "volatility": 24.57274817743645,
+      "sharpe_ratio": 0.6808999928930449,
+      "sortino_ratio": 0.9577853112251882,
       "total_periods": 44,
       "positive_periods": 31,
       "negative_periods": 13,
@@ -1182,10 +1182,10 @@
       "negative_rate": 29.545454545454547,
       "max_positive_return": 16.876471931828778,
       "max_negative_return": -18.394977175725316,
-      "mean_positive_return": 6.434152419329867,
-      "mean_negative_return": -7.358451274883397,
-      "median_positive_return": 4.740043420157373,
-      "median_negative_return": -5.849961281238221,
+      "mean_positive_return": 6.434150989953315,
+      "mean_negative_return": -7.358448099011079,
+      "median_positive_return": 4.740035899604321,
+      "median_negative_return": -5.849950852477458,
       "time_frame_days": 28
     },
     {
@@ -1232,44 +1232,44 @@
     },
     {
       "symbol": "META",
-      "mean_return": 3.413710792034604,
-      "median_return": 4.642808577855394,
-      "std_return": 13.682063359618384,
-      "volatility": 41.046190078855155,
-      "sharpe_ratio": 0.6388753031141946,
-      "sortino_ratio": 0.8557135645227572,
+      "mean_return": 3.4137111035630245,
+      "median_return": 4.642822943133357,
+      "std_return": 13.682064153383472,
+      "volatility": 41.046192460150415,
+      "sharpe_ratio": 0.6388753343571669,
+      "sortino_ratio": 0.8557139430928852,
       "total_periods": 44,
       "positive_periods": 31,
       "negative_periods": 13,
       "positive_rate": 70.45454545454545,
       "negative_rate": 29.545454545454547,
-      "max_positive_return": 29.387592964925414,
+      "max_positive_return": 29.387584771114916,
       "max_negative_return": -37.159759151718404,
-      "mean_positive_return": 10.15847783363052,
-      "mean_negative_return": -12.669964461001813,
-      "median_positive_return": 8.319790852472103,
-      "median_negative_return": -10.010826329900095,
+      "mean_positive_return": 10.158480912019707,
+      "mean_negative_return": -12.669970747372137,
+      "median_positive_return": 8.319797348705327,
+      "median_negative_return": -10.010833621662705,
       "time_frame_days": 28
     },
     {
       "symbol": "NVDA",
-      "mean_return": 8.24841952836172,
-      "median_return": 5.426820838468378,
-      "std_return": 20.405798179447213,
-      "volatility": 61.21739453834164,
-      "sharpe_ratio": 1.139149685823016,
-      "sortino_ratio": 2.0841096405298614,
+      "mean_return": 8.24841973646326,
+      "median_return": 5.426817328396366,
+      "std_return": 20.40579917266946,
+      "volatility": 61.21739751800838,
+      "sharpe_ratio": 1.1391496609710516,
+      "sortino_ratio": 2.0841092583825795,
       "total_periods": 44,
       "positive_periods": 28,
       "negative_periods": 16,
       "positive_rate": 63.63636363636363,
       "negative_rate": 36.36363636363637,
       "max_positive_return": 48.953312265573125,
-      "max_negative_return": -39.05299060775179,
-      "mean_positive_return": 19.3595957582285,
-      "mean_negative_return": -11.196138873905152,
-      "median_positive_return": 15.727406983859344,
-      "median_negative_return": -5.48325231417005,
+      "max_negative_return": -39.052993342153705,
+      "mean_positive_return": 19.359596520825043,
+      "mean_negative_return": -11.196139636169873,
+      "median_positive_return": 15.727398277839125,
+      "median_negative_return": -5.483258791128424,
       "time_frame_days": 28
     },
     {
@@ -1295,12 +1295,12 @@
     },
     {
       "symbol": "SPY",
-      "mean_return": 1.7896870354396517,
-      "median_return": 2.4001193037621986,
-      "std_return": 5.96960894095788,
-      "volatility": 17.90882682287364,
-      "sharpe_ratio": 0.6481263922956614,
-      "sortino_ratio": 0.7900949909710488,
+      "mean_return": 1.7896874934399796,
+      "median_return": 2.400121464440184,
+      "std_return": 5.969612648110955,
+      "volatility": 17.908837944332866,
+      "sharpe_ratio": 0.6481262199724597,
+      "sortino_ratio": 0.7900943069758607,
       "total_periods": 44,
       "positive_periods": 34,
       "negative_periods": 10,
@@ -1308,20 +1308,20 @@
       "negative_rate": 22.727272727272727,
       "max_positive_return": 17.80799921936101,
       "max_negative_return": -14.909457733689061,
-      "mean_positive_return": 4.220800217626554,
-      "mean_negative_return": -6.476097783995814,
-      "median_positive_return": 3.5576892416966057,
-      "median_negative_return": -5.270139275756038,
+      "mean_positive_return": 4.22080205468651,
+      "mean_negative_return": -6.476102014798229,
+      "median_positive_return": 3.5576657604612434,
+      "median_negative_return": -5.270128026319048,
       "time_frame_days": 28
     },
     {
       "symbol": "TSM",
-      "mean_return": 3.472089190767092,
-      "median_return": 2.7132990495287457,
-      "std_return": 13.254142210811702,
-      "volatility": 39.76242663243511,
-      "sharpe_ratio": 0.6727155503905847,
-      "sortino_ratio": 1.2710666088791396,
+      "mean_return": 3.472089171352884,
+      "median_return": 2.713303607696801,
+      "std_return": 13.254141380484084,
+      "volatility": 39.76242414145225,
+      "sharpe_ratio": 0.6727155881396673,
+      "sortino_ratio": 1.2710659899685242,
       "total_periods": 44,
       "positive_periods": 27,
       "negative_periods": 17,
@@ -1329,20 +1329,20 @@
       "negative_rate": 38.63636363636363,
       "max_positive_return": 32.872684992594,
       "max_negative_return": -24.602038202884287,
-      "mean_positive_return": 11.387282271580878,
-      "mean_negative_return": -9.099099819937157,
-      "median_positive_return": 8.258430857419391,
-      "median_negative_return": -6.213797166052834,
+      "mean_positive_return": 11.387282991935011,
+      "mean_negative_return": -9.099101014277558,
+      "median_positive_return": 8.258437349369991,
+      "median_negative_return": -6.21381948363492,
       "time_frame_days": 28
     },
     {
       "symbol": "SOXL",
-      "mean_return": 7.181659067527391,
-      "median_return": 3.513232310133154,
-      "std_return": 34.58962843742811,
-      "volatility": 103.76888531228434,
-      "sharpe_ratio": 0.5795083124076658,
-      "sortino_ratio": 1.0723936974388553,
+      "mean_return": 7.181659944082258,
+      "median_return": 3.513251377835623,
+      "std_return": 34.58962984974774,
+      "volatility": 103.76888954924321,
+      "sharpe_ratio": 0.5795083647705749,
+      "sortino_ratio": 1.0723936342486697,
       "total_periods": 44,
       "positive_periods": 26,
       "negative_periods": 18,
@@ -1350,41 +1350,41 @@
       "negative_rate": 40.909090909090914,
       "max_positive_return": 100.98362263503088,
       "max_negative_return": -65.08783564618865,
-      "mean_positive_return": 29.172327994351576,
-      "mean_negative_return": -24.582640493440884,
-      "median_positive_return": 28.655535263358026,
-      "median_negative_return": -21.975018632594875,
+      "mean_positive_return": 29.172330335890386,
+      "mean_negative_return": -24.582641732973926,
+      "median_positive_return": 28.655544810384235,
+      "median_negative_return": -21.97503269513395,
       "time_frame_days": 28
     },
     {
       "symbol": "QQQ",
-      "mean_return": 2.0325039611212783,
-      "median_return": 2.9932870758676273,
-      "std_return": 7.83729753529704,
-      "volatility": 23.51189260589112,
-      "sharpe_ratio": 0.5866195410673005,
-      "sortino_ratio": 0.7131607956515085,
+      "mean_return": 2.032504810963398,
+      "median_return": 2.9932828140469345,
+      "std_return": 7.837301271035803,
+      "volatility": 23.51190381310741,
+      "sharpe_ratio": 0.5866195867550938,
+      "sortino_ratio": 0.7131604528707594,
       "total_periods": 44,
       "positive_periods": 30,
       "negative_periods": 14,
       "positive_rate": 68.18181818181817,
       "negative_rate": 31.818181818181817,
       "max_positive_return": 23.087642908273274,
-      "max_negative_return": -19.501300071189767,
-      "mean_positive_return": 6.015436251382925,
-      "mean_negative_return": -6.502350946582254,
-      "median_positive_return": 5.255733502245081,
-      "median_negative_return": -4.229694137741783,
+      "max_negative_return": -19.501291470275543,
+      "mean_positive_return": 6.0154383794279305,
+      "mean_negative_return": -6.502352835746313,
+      "median_positive_return": 5.255725588990808,
+      "median_negative_return": -4.229709969952848,
       "time_frame_days": 28
     },
     {
       "symbol": "EEM",
-      "mean_return": 0.694466778865642,
-      "median_return": 0.6018767749513271,
-      "std_return": 6.391568604342262,
-      "volatility": 19.174705813026787,
-      "sharpe_ratio": 0.09127655082988227,
-      "sortino_ratio": 0.15026552076864175,
+      "mean_return": 0.6944666956639101,
+      "median_return": 0.6018820024461516,
+      "std_return": 6.391567381472488,
+      "volatility": 19.174702144417463,
+      "sharpe_ratio": 0.09127652924114625,
+      "sortino_ratio": 0.150265567689111,
       "total_periods": 44,
       "positive_periods": 25,
       "negative_periods": 18,
@@ -1392,20 +1392,20 @@
       "negative_rate": 40.909090909090914,
       "max_positive_return": 18.402862703240704,
       "max_negative_return": -12.55595477222538,
-      "mean_positive_return": 4.870286986036717,
-      "mean_negative_return": -5.066702021157205,
-      "median_positive_return": 4.54563308436353,
-      "median_negative_return": -4.00000999833033,
+      "mean_positive_return": 4.8702867122808415,
+      "mean_negative_return": -5.066701844322721,
+      "median_positive_return": 4.545641199768484,
+      "median_negative_return": -4.000012650632393,
       "time_frame_days": 28
     },
     {
       "symbol": "EWZ",
-      "mean_return": 0.9021800520051332,
-      "median_return": -1.7824595061784563,
-      "std_return": 9.096656963373837,
-      "volatility": 27.28997089012151,
-      "sharpe_ratio": 0.13263555621293965,
-      "sortino_ratio": 0.3017392814389345,
+      "mean_return": 0.9021801511853673,
+      "median_return": -1.7824595572705042,
+      "std_return": 9.096658044414587,
+      "volatility": 27.28997413324376,
+      "sharpe_ratio": 0.1326355731594117,
+      "sortino_ratio": 0.301739274466081,
       "total_periods": 44,
       "positive_periods": 19,
       "negative_periods": 25,
@@ -1413,10 +1413,10 @@
       "negative_rate": 56.81818181818182,
       "max_positive_return": 21.971090618919213,
       "max_negative_return": -18.88388608454759,
-      "mean_positive_return": 9.470939379318496,
-      "mean_negative_return": -5.610077036753022,
+      "mean_positive_return": 9.470941045144357,
+      "mean_negative_return": -5.610078128223464,
       "median_positive_return": 10.346114457505474,
-      "median_negative_return": -4.341923120293194,
+      "median_negative_return": -4.34191589065109,
       "time_frame_days": 28
     }
   ]
