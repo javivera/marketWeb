@@ -323,24 +323,6 @@ def save_plot_to_base64():
     plt.close()  # Close the figure to free memory
     return image_base64
 
-def create_correlation_heatmap(correlation_matrix, title):
-    """Create correlation heatmap and return base64 image"""
-    plt.figure(figsize=(10, 8))
-    
-    # Create heatmap
-    sns.heatmap(correlation_matrix, 
-                annot=True, 
-                cmap='RdBu_r', 
-                center=0,
-                square=True,
-                fmt='.3f',
-                cbar_kws={'label': 'Correlation Coefficient'})
-    
-    plt.title(title, fontsize=16, fontweight='bold', pad=20)
-    plt.tight_layout()
-    
-    return save_plot_to_base64()
-
 def create_return_distribution_plots(period_returns, symbols, time_frame_days):
     """Create return distribution plots and return base64 image"""
     n_stocks = len(symbols)
