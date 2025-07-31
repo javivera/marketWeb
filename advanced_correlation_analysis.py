@@ -514,7 +514,7 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
                 padding: 20px;
                 background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
                 min-height: 100vh;
-                color: rgba(255, 255, 255, 0.9);
+                color: #e8e9ea;
                 position: relative;
                 overflow-x: hidden;
             }}
@@ -551,6 +551,10 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
                 z-index: 1;
             }}
             
+            p, li, div {{
+                color: #e8e9ea;
+            }}
+            
             .header {{
                 text-align: center;
                 border-bottom: 2px solid rgba(120, 200, 255, 0.6);
@@ -559,16 +563,16 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
             }}
             
             .header h1 {{
-                color: rgba(255, 255, 255, 0.95);
+                color: #ffffff;
                 margin: 0;
                 font-size: 3em;
                 font-weight: 300;
                 letter-spacing: -1px;
-                text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
             }}
             
             .header p {{
-                color: rgba(255, 255, 255, 0.7);
+                color: #b8bcc0;
                 margin: 15px 0 0 0;
                 font-size: 1.2em;
                 font-weight: 300;
@@ -602,12 +606,12 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
             }}
             
             .section h2 {{
-                color: rgba(255, 255, 255, 0.9);
+                color: #ffffff;
                 border-bottom: 2px solid rgba(120, 200, 255, 0.6);
                 padding-bottom: 15px;
                 margin-top: 0;
                 font-weight: 400;
-                text-shadow: 0 0 10px rgba(120, 200, 255, 0.3);
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
             }}
             
             .summary-table {{
@@ -626,18 +630,18 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
                 padding: 12px 15px;
                 text-align: center;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-                color: rgba(255, 255, 255, 0.8);
+                color: #e8e9ea;
             }}
             
             .summary-table th {{
                 background: rgba(120, 200, 255, 0.2);
-                color: rgba(255, 255, 255, 0.95);
+                color: #ffffff;
                 font-weight: 500;
                 cursor: pointer;
                 user-select: none;
                 position: relative;
                 transition: all 0.3s ease;
-                text-shadow: 0 0 10px rgba(120, 200, 255, 0.3);
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
             }}
             
             .summary-table th:hover {{
@@ -674,17 +678,17 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
                 padding: 8px 12px;
                 text-align: center;
                 border: 1px solid rgba(255, 255, 255, 0.1);
-                color: rgba(255, 255, 255, 0.8);
+                color: #e8e9ea;
                 font-size: 0.9em;
             }}
             
             .correlation-table th {{
                 background: rgba(52, 73, 94, 0.4);
-                color: rgba(255, 255, 255, 0.95);
+                color: #ffffff;
                 font-weight: 500;
                 cursor: pointer;
                 user-select: none;
-                text-shadow: 0 0 5px rgba(52, 73, 94, 0.5);
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
             }}
             
             .correlation-table th:hover {{
@@ -720,10 +724,10 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
             }}
             
             .info-box h4 {{
-                color: rgba(46, 204, 113, 0.9);
+                color: rgba(46, 204, 113, 1);
                 margin-top: 0;
                 margin-bottom: 12px;
-                text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+                text-shadow: 0 1px 5px rgba(46, 204, 113, 0.5);
             }}
             
             .footer {{
@@ -731,26 +735,26 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
                 margin-top: 40px;
                 padding-top: 20px;
                 border-top: 1px solid rgba(255, 255, 255, 0.1);
-                color: rgba(255, 255, 255, 0.6);
+                color: #9ca3af;
                 font-weight: 300;
             }}
             
             .positive {{ 
-                color: rgba(46, 204, 113, 0.9) !important; 
+                color: rgba(46, 204, 113, 1) !important; 
                 font-weight: 500 !important;
-                text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+                text-shadow: 0 1px 5px rgba(46, 204, 113, 0.5);
             }}
             
             .negative {{ 
-                color: rgba(231, 76, 60, 0.9) !important; 
+                color: rgba(231, 76, 60, 1) !important; 
                 font-weight: 500 !important;
-                text-shadow: 0 0 10px rgba(231, 76, 60, 0.3);
+                text-shadow: 0 1px 5px rgba(231, 76, 60, 0.5);
             }}
             
             .neutral {{ 
-                color: rgba(243, 156, 18, 0.9) !important; 
+                color: rgba(243, 156, 18, 1) !important; 
                 font-weight: 500 !important;
-                text-shadow: 0 0 10px rgba(243, 156, 18, 0.3);
+                text-shadow: 0 1px 5px rgba(243, 156, 18, 0.5);
             }}
             
             /* Collapsible sections */
