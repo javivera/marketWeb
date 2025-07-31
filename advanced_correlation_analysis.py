@@ -790,13 +790,15 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
                 padding: 0;
                 overflow: hidden;
                 transition: max-height 0.3s ease-out;
-                background-color: #fafafa;
+                background: rgba(255, 255, 255, 0.08);
+                backdrop-filter: blur(15px);
                 border-radius: 0 0 5px 5px;
                 border-left: 3px solid #3498db;
+                border: 1px solid rgba(255, 255, 255, 0.1);
             }}
             
             .collapsible-content.show {{
-                padding: 10px;
+                padding: 20px;
             }}
             }}
             }}
