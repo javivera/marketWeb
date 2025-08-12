@@ -989,16 +989,6 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
     
     html_content += f"""
             <button class="collapsible" onclick="toggleCollapsible(this)">
-                � Return Distribution Analysis
-                <span class="collapsible-icon">▼</span>
-            </button>
-            <div class="collapsible-content">
-                <div class="chart-container">
-                    <img src="data:image/png;base64,{distribution_plots_b64}" alt="Return Distribution Plots">
-                </div>
-            </div>
-
-            <button class="collapsible" onclick="toggleCollapsible(this)">
                 📊 Return Distribution Analysis
                 <span class="collapsible-icon">▼</span>
             </button>
@@ -1018,20 +1008,7 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
                 </div>
             </div>
 
-            <button class="collapsible" onclick="toggleCollapsible(this)">
-                💡 Key Insights
-                <span class="collapsible-icon">▼</span>
-            </button>
-            <div class="collapsible-content">
-                <div class="info-box">
-                    <h4>🎯 How to Read This Analysis</h4>
-                    <p><strong>Correlation Matrix:</strong> High correlations (>0.7) suggest stocks move together, limiting diversification benefits.</p>
-                    <p><strong>Mean Return:</strong> Average return over {time_frame_days}-day periods. Higher is generally better, but consider volatility.</p>
-                    <p><strong>Success Rate:</strong> Percentage of periods with positive returns. Higher rates suggest more consistent performance.</p>
-                    <p><strong>Volatility:</strong> Measure of price fluctuation. Higher volatility means more risk but potentially higher returns.</p>
-                    <p><strong>Sharpe Ratio:</strong> Risk-adjusted return measure. Higher values indicate better risk-adjusted performance.</p>
-                </div>
-            </div>
+            
 
             <button class="collapsible" onclick="toggleCollapsible(this)">
                 📊 Detailed Stock Statistics
