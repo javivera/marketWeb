@@ -27,7 +27,8 @@ def load_env_file(env_path='.env'):
             line = line.strip()
             if line and not line.startswith('#') and '=' in line:
                 key, value = line.split('=', 1)
-                # Remove quotes if present
+                # Normalize key and value spacing, remove quotes if present
+                key = key.strip()
                 value = value.strip().strip('"').strip("'")
                 env_vars[key] = value
     
@@ -946,10 +947,7 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
                     </tbody>
                 </table>
                 
-                <div class="info-box">
-                    <h4>📊 Analysis Parameters</h4>
-                    <p><strong>Time Frame:</strong> {time_frame_days} days | <strong>Data Period:</strong> {data_period.upper()} | <strong>Analysis Date:</strong> {current_time}</p>
-                </div>
+                
             </div>
 
             <button class="collapsible" onclick="toggleCollapsible(this)">
@@ -1077,7 +1075,7 @@ def generate_html_report(correlation_data, return_stats_text, symbols, data_peri
                 </div>
         """
     
-    html_content += """
+    html_content += f"""
             </div>
 
             <div class="footer">
