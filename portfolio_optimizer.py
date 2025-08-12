@@ -316,7 +316,7 @@ def optimize_portfolio(returns_data, current_prices, target_stocks=5, num_simula
     # Also ensure the results list passed to HTML has all portfolios
     return results  # Return all results, not just top 10
 
-def generate_optimization_report(results, config, returns_data, max_budget):
+def generate_optimization_report(results, config, returns_data, max_budget, shares_per_stock):
     """Generate HTML report for portfolio optimization"""
     
     if not results:
@@ -759,7 +759,7 @@ def generate_optimization_report(results, config, returns_data, max_budget):
                         <th onclick="sortTable(6, this)" class="sortable">Worst Case</th>
                         <th onclick="sortTable(7, this)" class="sortable">Avg Max Drawdown</th>
                         <th onclick="sortTable(8, this)" class="sortable">Avg Correlation</th>
-                        <th onclick="sortTable(9, this)" class="sortable">Portfolio Cost (100 shares each)</th>
+                        <th onclick="sortTable(9, this)" class="sortable">Portfolio Cost ({shares_per_stock} shares each)</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -848,9 +848,44 @@ def main():
     current_prices = fetch_current_prices(unique_stocks)
     
     # Run optimization
-    results = optimize_portfolio(returns_data, current_prices, target_stocks, num_simulations, simulation_days, random_combinations, shares_per_stock, max_budget)
+    results = optimize_portfolio(
+        returns_data,
+        current_prices,
+        target_stocks,
+        num_simulations,
+        simulation_days,
+        random_combinations,
+        shares_per_stock,
+        max_budget,
+    )
     if not results:
-        return
+        print("\n⚠️  No valid portfolio combinations found within budget.")
+        if shares_per_stock > 1:
+            print("   Retrying automatically with SHARES_PER_STOCK=1...")
+            results = optimize_portfolio(
+                returns_data,
+                current_prices,
+                target_stocks,
+                num_simulations,
+                simulation_days,
+                random_combinations,
+                1,
+                max_budget,
+            )
+            if results:
+                shares_per_stock = 1
+        if not results:
+            # Compute a rough minimum feasible cost for guidance
+            # Take the cheapest target_stocks among candidate current_prices
+            sorted_prices = sorted([price for _, price in current_prices.items() if price is not None])
+            if len(sorted_prices) >= target_stocks:
+                min_cost_1_share = sum(sorted_prices[:target_stocks])
+                print(f"   ℹ️ Minimum estimated cost with 1 share each: ${min_cost_1_share:,.2f}")
+            print("\n❌ Still no valid portfolios. Try one or more of these:")
+            print("   • Decrease SHARES_PER_STOCK (e.g., 1 or 5) in .env")
+            print("   • Increase MAX_PORTFOLIO_BUDGET in .env")
+            print("   • Remove very expensive tickers from OPTIMIZER_STOCKS")
+            return
     
     # Print top results
     print(f"\\n🏆 TOP 5 OPTIMIZED PORTFOLIOS:")
@@ -864,7 +899,7 @@ def main():
         print()
     
     # Generate HTML report
-    html_content = generate_optimization_report(results, config, returns_data, max_budget)
+    html_content = generate_optimization_report(results, config, returns_data, max_budget, shares_per_stock)
     
     # Save HTML report
     html_filename = 'portfolio_optimization.html'
