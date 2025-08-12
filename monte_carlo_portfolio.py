@@ -240,28 +240,32 @@ def analyze_simulation_results(simulation_data, config=None):
     mean_return = np.mean(total_returns)
     std_return = np.std(total_returns)
     
-    # Calculate annualized returns properly based on simulation period
+    # Calculate CAGR using mean return
+    years = simulation_days / 252
+    cagr = (1 + mean_return) ** (1 / years) - 1 if mean_return > -1 else np.nan
+    median_cagr = np.nan  # Not meaningful in this context
+
+    # Annualized volatility (unchanged)
     periods_per_year = 252 / simulation_days
-    annualized_return = ((1 + mean_return) ** periods_per_year) - 1
     annualized_volatility = std_return * np.sqrt(periods_per_year)
-    
+
     # Sharpe ratio (get risk-free rate from config)
     risk_free_rate = float(config.get('RISK_FREE_RATE', 0.05)) if config else 0.05
-    sharpe_ratio = (annualized_return - risk_free_rate) / annualized_volatility if annualized_volatility > 0 else 0
-    
-    # Calculate statistics
+    sharpe_ratio = (cagr - risk_free_rate) / annualized_volatility if annualized_volatility > 0 else 0
+
     analysis = {
         'initial_value': initial_value,
         'num_simulations': len(results),
         'simulation_days': simulation_days,
-        'simulation_years': simulation_days / 252,
+        'simulation_years': years,
         'mean_final_value': np.mean(final_values),
         'median_final_value': np.median(final_values),
         'std_final_value': np.std(final_values),
         'mean_return': mean_return,
         'median_return': np.median(total_returns),
         'std_return': std_return,
-        'annualized_return': annualized_return,
+        'mean_cagr': cagr,
+        'median_cagr': median_cagr,
         'annualized_volatility': annualized_volatility,
         'sharpe_ratio': sharpe_ratio,
         'min_return': np.min(total_returns),
@@ -275,16 +279,15 @@ def analyze_simulation_results(simulation_data, config=None):
         'var_95': np.percentile(total_returns, 5),  # Value at Risk (95% confidence)
         'var_99': np.percentile(total_returns, 1),  # Value at Risk (99% confidence)
     }
-    
-    # Print enhanced summary
-    print(f"\n📊 Monte Carlo Analysis Results ({simulation_days}-day / {simulation_days/252:.1f}-year simulation):")
-    print(f"   • Expected return: {mean_return:.2%} ({annualized_return:.2%} annualized)")
+
+    print(f"\n📊 Monte Carlo Analysis Results ({simulation_days}-day / {years:.1f}-year simulation):")
+    print(f"   • Expected return: {mean_return:.2%} (CAGR: {cagr:.2%})")
     print(f"   • Volatility: {std_return:.2%} ({annualized_volatility:.2%} annualized)")
     print(f"   • Sharpe ratio: {sharpe_ratio:.2f}")
     print(f"   • Probability of gain: {analysis['prob_gain']:.1%}")
     print(f"   • 95% VaR: {analysis['var_95']:.2%}")
     print(f"   • Return range: {analysis['min_return']:.2%} to {analysis['max_return']:.2%}")
-    
+
     return analysis
 
 def calculate_historical_performance(portfolio_holdings, current_prices):
@@ -543,14 +546,6 @@ def generate_historical_performance_html(historical_performance):
                 </tbody>
             </table>
             
-            <div style="margin-top: 20px; padding: 15px; background-color: #f0f8ff; border-left: 4px solid #007acc; border-radius: 5px;">
-                <h4>📝 Performance Notes:</h4>
-                <ul>
-                    <li><strong>Outperformance:</strong> Positive values mean your portfolio beat SPY, negative means it underperformed</li>
-                    <li><strong>SPY Benchmark:</strong> Represents the S&P 500 index performance for the same periods</li>
-                    <li><strong>🚀 = Outperformed SPY</strong> | <strong>📉 = Underperformed SPY</strong></li>
-                </ul>
-            </div>
     """
     
     return html
@@ -881,7 +876,7 @@ def generate_html_report(simulation_data, analysis, chart_b64, config, historica
                 <div class="summary-card">
                     <h3>📈 Expected Returns</h3>
                     <p><strong>Mean Return:</strong> <span class="value {'positive' if analysis['mean_return'] > 0 else 'negative'}">{analysis['mean_return']:.2%}</span></p>
-                    <p><strong>Annualized Return:</strong> <span class="value {'positive' if analysis['annualized_return'] > 0 else 'negative'}">{analysis['annualized_return']:.2%}</span></p>
+                    <p><strong>CAGR:</strong> <span class="value {'positive' if analysis['mean_cagr'] > 0 else 'negative'}">{analysis['mean_cagr']:.2%}</span></p>
                     <p><strong>Volatility (Annual):</strong> <span class="value">{analysis['annualized_volatility']:.2%}</span></p>
                     <p><strong>Sharpe Ratio:</strong> <span class="value {'positive' if analysis['sharpe_ratio'] > 0 else 'negative'}">{analysis['sharpe_ratio']:.2f}</span></p>
                 </div>
@@ -934,15 +929,6 @@ def generate_html_report(simulation_data, analysis, chart_b64, config, historica
                 <img src="data:image/png;base64,{chart_b64}" alt="Monte Carlo Simulation Charts" style="max-width: 100%; height: auto;">
             </div>
             
-            <div style="margin-top: 40px; padding: 20px; background-color: #e8f6f3; border-radius: 8px;">
-                <h3>💡 Key Insights</h3>
-                <ul>
-                    <li><strong>Expected Portfolio Growth:</strong> Based on {analysis['num_simulations']:,} simulations, your portfolio has a {analysis['prob_gain']:.1%} chance of gaining value over {config.get('SIMULATION_DAYS', 'N/A')} days.</li>
-                    <li><strong>Risk Assessment:</strong> There's a 5% chance your portfolio could lose more than {abs(analysis['var_95']):.1%} of its value (VaR 95%).</li>
-                    <li><strong>Return Expectation:</strong> The median expected return is {analysis['median_return']:.2%}, with potential gains up to {analysis['max_return']:.1%}.</li>
-                    <li><strong>Volatility:</strong> Portfolio returns have a standard deviation of {analysis['std_return']:.2%}, indicating {'high' if analysis['std_return'] > 0.2 else 'moderate' if analysis['std_return'] > 0.1 else 'low'} volatility.</li>
-                </ul>
-            </div>
             
             <!-- Separator between Monte Carlo and Historical Performance -->
             <hr style="margin: 40px 0; border: 2px solid #3498db; opacity: 0.3;">
@@ -973,7 +959,7 @@ def main():
     stock_symbols = config.get('STOCK_SYMBOLS', 'AAPL,MSFT,GOOGL').split(',')
     portfolio_holdings_str = config.get('PORTFOLIO_HOLDINGS', '')
     num_simulations = int(config.get('MONTE_CARLO_SIMULATIONS', '10000'))
-    simulation_days = int(config.get('SIMULATION_DAYS', '252'))
+    simulation_days = int(config.get('MONTECARLO_SIMULATION_DAYS', '252'))
     initial_cash = float(config.get('INITIAL_CASH', '0'))
     html_filename = 'montecarlo.html'  # Fixed filename for Monte Carlo reports
     

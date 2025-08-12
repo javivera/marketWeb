@@ -4,6 +4,7 @@ Option Yield Calculator - Calculates annualized cost of options
 
 import os
 import asyncio
+from datetime import datetime
 from dotenv import load_dotenv
 from tastytrade import Session, DXLinkStreamer
 from tastytrade.dxfeed import Quote
@@ -38,20 +39,40 @@ async def get_stock_price(ticker, session):
         quote = await streamer.get_event(Quote)
         return float((quote.bid_price + quote.ask_price) / 2)
             
-
-def calculate_annualized_yield(stock_price, premium, strike_price, days):
-    """Calculate annualized yield."""
-    raw_return = (strike_price + premium - stock_price) / stock_price
+def calculate_annualized_yield(stock_price, premium_paid, strike_price, days):
+    """
+    Calculate annualized yield for an option strategy.
+    
+    Args:
+        stock_price: Current stock price
+        premium_paid: Premium you paid for the option
+        strike_price: Strike price of the option
+        days: Days until expiration
+        
+    Returns:
+        Annualized yield as a percentage
+    """
+    # Calculate the adjusted premium (premium minus intrinsic value)
+    intrinsic_value = max(0, stock_price - strike_price)  # For call options
+    adjusted_premium = premium_paid - intrinsic_value
+    
+    # Calculate the raw return rate
+    raw_return = adjusted_premium / stock_price
+    
+    # Annualize the return
     annualized_return = (1 + raw_return) ** (365 / days) - 1
     return annualized_return * 100
-
 
 def get_other_inputs():
     """Get the rest of the user inputs synchronously."""
     strike_price = float(input("Strike Price: ").strip())
-    premium = float(input("Premium Paid: ").strip())
-    days = int(input("DTE (Days to Expiration): ").strip())
-    return strike_price, premium, days
+    premium_paid = float(input("Premium Paid: ").strip())
+    days = int(input("Days to Expiration: ").strip())
+    
+    if days <= 0:
+        raise ValueError("Days to expiration must be greater than 0")
+    
+    return strike_price, premium_paid, days
 
 async def main():
     """Calculate option yield with ticker lookup."""
@@ -73,16 +94,26 @@ async def main():
         # Wait for both tasks to complete concurrently.
         results = await asyncio.gather(price_task, inputs_task)
         stock_price = results[0]
-        strike_price, premium, days = results[1]
+        strike_price, premium_paid, days = results[1]
         
         if stock_price is None:
             print(f"Could not fetch price for {ticker}. Exiting.")
             return
         
         print(f"\nCurrent price for {ticker}: ${stock_price:.2f}")
+        print(f"Strike Price: ${strike_price:.2f}")
+        print(f"Premium Paid: ${premium_paid:.2f}")
+        print(f"Days to Expiration: {days}")
+        
+        # Calculate intrinsic value and adjusted premium
+        intrinsic_value = max(0, stock_price - strike_price)
+        adjusted_premium = premium_paid - intrinsic_value
+        
+        print(f"Intrinsic Value: ${intrinsic_value:.2f}")
+        print(f"Adjusted Premium (after subtracting intrinsic value): ${adjusted_premium:.2f}")
         
         # Calculate and print result
-        annualized_yield = calculate_annualized_yield(stock_price, premium, strike_price, days)
+        annualized_yield = calculate_annualized_yield(stock_price, premium_paid, strike_price, days)
         print(f"\nAnnualized Return: {annualized_yield:.2f}%")
         
     except ValueError:

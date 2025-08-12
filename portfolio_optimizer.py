@@ -794,16 +794,6 @@ def generate_optimization_report(results, config, returns_data, max_budget):
                 </tbody>
             </table>
             
-            <div style="margin-top: 40px; padding: 20px; background-color: #e8f6f3; border-radius: 8px;">
-                <h3>💡 Key Insights</h3>
-                <ul>
-                    <li><strong>Optimal Portfolio:</strong> The top-ranked portfolio offers the best risk-adjusted returns with a Sharpe ratio of {top_portfolios[0]['sharpe_ratio']:.3f}</li>
-                    <li><strong>Expected Performance:</strong> The optimal portfolio has an expected annual return of {top_portfolios[0]['annualized_return']:.2%} with {top_portfolios[0]['annualized_volatility']:.2%} volatility</li>
-                    <li><strong>Diversification:</strong> The optimization considered equal-weight portfolios to focus purely on stock selection rather than allocation</li>
-                    <li><strong>Risk-Adjusted Focus:</strong> Rankings prioritize Sharpe ratio (return per unit of risk) over pure returns</li>
-                </ul>
-            </div>
-            
             <div style="margin-top: 30px; text-align: center; color: #7f8c8d; font-size: 0.9em;">
                 <p>Generated on {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} | Portfolio Optimization Analysis</p>
                 <p><em>This analysis is for educational purposes only. Past performance does not guarantee future results.</em></p>
