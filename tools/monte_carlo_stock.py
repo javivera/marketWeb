@@ -2,6 +2,33 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 from datetime import datetime, timedelta
+import time
+
+def calculate_trading_days(calendar_days):
+    """
+    Calculate the number of trading days based on calendar days.
+    Uses the approximation that there are 252 trading days per 365 calendar days.
+    This accounts for weekends and holidays.
+    
+    Args:
+        calendar_days (int): Number of calendar days
+        
+    Returns:
+        int: Estimated number of trading days
+        
+    Examples:
+        - 365 calendar days → 252 trading days (1 year)
+        - 30 calendar days → 21 trading days (1 month)
+        - 7 calendar days → 5 trading days (1 week)
+    """
+    # Trading days per year is approximately 252 out of 365 calendar days
+    trading_days_per_year = 252
+    calendar_days_per_year = 365
+    
+    # Calculate trading days with rounding
+    trading_days = round(calendar_days * (trading_days_per_year / calendar_days_per_year))
+    
+    return max(1, trading_days)  # Ensure at least 1 trading day
 
 def monte_carlo_simulation(initial_price, daily_return, daily_volatility, num_trading_days, num_simulations):
     """
@@ -30,41 +57,91 @@ def monte_carlo_simulation(initial_price, daily_return, daily_volatility, num_tr
 
     return pd.DataFrame(price_paths)
 
-def fetch_stock_data(symbol: str, start_date: datetime, end_date: datetime) -> pd.Series:
+def fetch_stock_data(symbol: str, start_date: datetime, end_date: datetime, max_retries: int = 3) -> pd.Series:
     """
     Fetches adjusted close price history for a given stock symbol using yfinance.
-    """
-    try:
-        ticker = yf.Ticker(symbol)
-        # Fetch 'Adj Close' prices
-        df = ticker.history(start=start_date.strftime('%Y-%m-%d'), 
-                            end=(end_date + timedelta(days=1)).strftime('%Y-%m-%d'), 
-                            interval='1d',
-                            auto_adjust=True) # Explicitly set auto_adjust to True
-        if df.empty:
-            return pd.Series()
+    Includes retry logic to handle rate limiting.
+    
+    Args:
+        symbol: Stock ticker symbol
+        start_date: Start date for data
+        end_date: End date for data
+        max_retries: Maximum number of retry attempts
         
-        ser = df['Close']
-        ser.index = pd.to_datetime(ser.index).date
-        ser.name = symbol.upper()
-        return ser
-    except Exception as e:
-        print(f"Error fetching data for {symbol}: {e}")
-        return pd.Series()
+    Returns:
+        pd.Series: Stock price data or empty series if failed
+    """
+    for attempt in range(max_retries):
+        try:
+            print(f"Fetching data for {symbol}... (attempt {attempt + 1}/{max_retries})")
+            
+            # Add initial delay to avoid immediate rate limiting
+            if attempt > 0:
+                time.sleep(2)
+            
+            ticker = yf.Ticker(symbol)
+            # Fetch 'Adj Close' prices
+            df = ticker.history(start=start_date.strftime('%Y-%m-%d'), 
+                                end=(end_date + timedelta(days=1)).strftime('%Y-%m-%d'), 
+                                interval='1d',
+                                auto_adjust=True) # Explicitly set auto_adjust to True
+            
+            if df.empty:
+                print(f"No data returned for {symbol}")
+                return pd.Series()
+            
+            ser = df['Close']
+            ser.index = pd.to_datetime(ser.index).date
+            ser.name = symbol.upper()
+            print(f"✅ Successfully fetched {len(ser)} data points for {symbol}")
+            return ser
+            
+        except Exception as e:
+            error_msg = str(e).lower()
+            if "rate limit" in error_msg or "too many requests" in error_msg:
+                if attempt < max_retries - 1:
+                    wait_time = (attempt + 1) * 10  # Longer waits: 10, 20, 30 seconds
+                    print(f"⏰ Rate limited. Waiting {wait_time} seconds before retry...")
+                    time.sleep(wait_time)
+                    continue
+                else:
+                    print(f"❌ Rate limited after {max_retries} attempts.")
+                    print("💡 Tip: Try using a more common stock symbol like AAPL, MSFT, or GOOGL")
+                    print("💡 Tip: Wait a few minutes and try again")
+            else:
+                print(f"❌ Error fetching data for {symbol}: {e}")
+            
+            if attempt == max_retries - 1:
+                return pd.Series()
+    
+    return pd.Series()
 
 if __name__ == "__main__":
+    print("📈 Monte Carlo Stock Price Simulation")
+    print("=" * 40)
+    
     stock_ticker = input("Enter the stock ticker symbol (e.g., AAPL, MSFT): ").upper()
+    
+    print("\n💡 Calendar to Trading Days Examples:")
+    print("   • 7 days (1 week) → ~5 trading days")
+    print("   • 30 days (1 month) → ~21 trading days")
+    print("   • 90 days (3 months) → ~63 trading days")
+    print("   • 365 days (1 year) → ~252 trading days")
     
     while True:
         try:
-            num_trading_days_input = input("Enter the number of trading days to simulate (e.g., 252 for 1 year): ")
-            num_trading_days = int(num_trading_days_input)
-            if num_trading_days <= 0:
-                print("Number of trading days must be a positive integer.")
+            calendar_days_input = input("\nEnter the number of calendar days to simulate: ")
+            calendar_days = int(calendar_days_input)
+            if calendar_days <= 0:
+                print("Number of calendar days must be a positive integer.")
             else:
                 break
         except ValueError:
-            print("Invalid input. Please enter an integer for the number of trading days.")
+            print("Invalid input. Please enter an integer for the number of calendar days.")
+
+    # Calculate trading days from calendar days
+    num_trading_days = calculate_trading_days(calendar_days)
+    print(f"\n📅 Calendar days: {calendar_days} → Trading days: {num_trading_days}")
 
     num_simulations = 10000  # Number of simulation paths
 
@@ -94,7 +171,8 @@ if __name__ == "__main__":
             print(f"  Initial Price (last available): ${initial_price:.2f}")
             print(f"  Daily Return: {daily_return:.4f} (approx. {daily_return*100:.2f}%)")
             print(f"  Daily Volatility: {daily_volatility:.4f} (approx. {daily_volatility*100:.2f}%)")
-            print(f"  Number of Trading Days: {num_trading_days}")
+            print(f"  Calendar Days: {calendar_days}")
+            print(f"  Trading Days: {num_trading_days}")
             print(f"  Number of Simulations: {num_simulations}\n")
 
             simulated_prices = monte_carlo_simulation(

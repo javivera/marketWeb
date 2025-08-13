@@ -316,7 +316,7 @@ def optimize_portfolio(returns_data, current_prices, target_stocks=5, num_simula
     # Also ensure the results list passed to HTML has all portfolios
     return results  # Return all results, not just top 10
 
-def generate_optimization_report(results, config, returns_data, max_budget, shares_per_stock):
+def generate_optimization_report(results, config, returns_data, max_budget, shares_per_stock, simulation_days):
     """Generate HTML report for portfolio optimization"""
     
     if not results:
@@ -731,6 +731,7 @@ def generate_optimization_report(results, config, returns_data, max_budget, shar
                     <p><strong>Random Combinations Tested:</strong> <span class="value">{len(results):,}</span></p>
                     <p><strong>Target Portfolio Size:</strong> <span class="value">5 stocks</span></p>
                     <p><strong>Budget Constraint:</strong> <span class="value">${max_budget:,.2f}</span></p>
+                    <p><strong>Simulation Period:</strong> <span class="value">{simulation_days} days ({simulation_days/252:.2f} years)</span></p>
                     <p><strong>Optimization Metric:</strong> <span class="value">Sharpe Ratio</span></p>
                     <p><strong>Risk-Free Rate:</strong> <span class="value">4.5%</span></p>
                     <p><strong>Sampling Method:</strong> <span class="value">Random</span></p>
@@ -856,7 +857,7 @@ def main():
         simulation_days,
         random_combinations,
         shares_per_stock,
-        max_budget,
+        int(max_budget),
     )
     if not results:
         print("\n⚠️  No valid portfolio combinations found within budget.")
@@ -870,7 +871,7 @@ def main():
                 simulation_days,
                 random_combinations,
                 1,
-                max_budget,
+                int(max_budget),
             )
             if results:
                 shares_per_stock = 1
@@ -895,11 +896,11 @@ def main():
         print(f"#{i}: {stocks_str}")
         print(f"     Return: {portfolio['annualized_return']:.2%} | Volatility: {portfolio['annualized_volatility']:.2%} | Sharpe: {portfolio['sharpe_ratio']:.3f}")
         print(f"     Best Case: {portfolio['annualized_best_case']:.2%} | Worst Case: {portfolio['annualized_worst_case']:.2%} | Avg Max Drawdown: {portfolio['mean_max_drawdown']:.2%}")
-        print(f"     Portfolio Cost (100 shares each): ${portfolio['portfolio_cost']:,.2f} | Avg Correlation: {portfolio['avg_correlation']:.3f}")
+        print(f"     Portfolio Cost ({shares_per_stock} shares each): ${portfolio['portfolio_cost']:,.2f} | Avg Correlation: {portfolio['avg_correlation']:.3f}")
         print()
     
     # Generate HTML report
-    html_content = generate_optimization_report(results, config, returns_data, max_budget, shares_per_stock)
+    html_content = generate_optimization_report(results, config, returns_data, max_budget, shares_per_stock, simulation_days)
     
     # Save HTML report
     html_filename = 'portfolio_optimization.html'
